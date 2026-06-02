@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>MY DIET PLAN</title>
+<link rel="icon" type="image/png" sizes="192x192" href="icon-diet.png">
+<link rel="apple-touch-icon" href="icon-diet.png">
+<meta name="theme-color" content="#16a34a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      -webkit-tap-highlight-color: transparent; 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    
+    :root {
+      --bg: #e0e5ec;
+      --shadow-light: #ffffff;
+      --shadow-dark: #a3b1c6;
+      --accent: #007AFF;
+      --text: #31344b;
+      --card-line: linear-gradient(90deg, #007AFF, #00C6FF);
+      --neu-inset: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff;
+    }
+    body.dark {
+      --bg: #2d3436;
+      --shadow-light: #3d4648;
+      --shadow-dark: #15191a;
+      --accent: #00d2ff;
+      --text: #ffffff;
+      --card-line: linear-gradient(90deg, #00d2ff, #3a7bd5);
+      --neu-inset: inset 3px 3px 6px #15191a, inset -3px -3px 6px #3d4648;
+    }
+    
+    body { 
+      background: var(--bg); 
+      color: var(--text); 
+      padding: 15px; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      transition: background 0.3s ease; 
+      min-height: 100vh; 
+      width: 100%;
+      overflow-x: hidden;
+    }
+    
+    .container { width: 100%; max-width: 440px; margin: 0 auto; }
+
+    .mode-switch { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; width: 100%; }
+    .mode-btn { padding: 12px; border-radius: 15px; border: none; font-weight: bold; background: var(--bg); color: var(--text); box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); cursor: pointer; font-size: 13px; flex: 1; }
+    body:not(.dark) #dBtn { background: #2d3436; color: white; }
+    body.dark #lBtn { background: #ffffff; color: #2d3436; }
+    .mode-btn.active { color: var(--accent); box-shadow: var(--neu-inset); }
+
+    .header-card {
+      background: linear-gradient(135deg, #007AFF, #00C6FF);
+      color: white; border-radius: 28px; padding: 35px 20px;
+      margin-bottom: 30px; box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+      text-align: center; width: 100%; position: relative; overflow: hidden;
+    }
+    .header-card .top-tag { font-size: 11px; font-weight: bold; opacity: 0.8; margin-bottom: 8px; letter-spacing: 1.5px; text-transform: uppercase; }
+    .header-card .main-greet { font-size: 24px; font-weight: 800; margin-bottom: 12px; line-height: 1.2; word-break: keep-all; }
+    .header-card .bottom-summary { font-size: 14px; font-weight: 500; opacity: 0.95; line-height: 1.4; }
+
+    .runner { position: absolute; bottom: 8px; font-size: 26px; pointer-events: none; width: 40px; z-index: 1; }
+    .runner.left { left: -50px; animation: moveRight 14s linear infinite; }
+    .runner.right { right: -50px; animation: moveLeft 14s linear infinite; animation-delay: 7s; }
+    @keyframes moveRight { from { left: -50px; } to { left: 110%; } }
+    @keyframes moveLeft { from { right: -50px; } to { right: 110%; } }
+    .runner.left span { transform: scaleX(-1); display: inline-block; }
+
+    .card { 
+      background: var(--bg); border-radius: 24px; padding: 22px; 
+      box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); 
+      margin-bottom: 25px; position: relative; width: 100%; 
+    }
+    .card::before { 
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; 
+      background: var(--card-line); border-radius: 24px 24px 0 0;
+    }
+
+    .section-title { 
+      background: var(--accent); color: white; border-radius: 14px; padding: 12px; 
+      font-weight: bold; margin-bottom: 20px; text-align: center; font-size: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .input-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 15px; }
+    .input-group { flex: 1; min-width: 100px; text-align: left; }
+    @media (max-width: 380px) { .input-group { min-width: 45%; } }
+
+    .label { font-size: 11px; margin-bottom: 6px; display: block; font-weight: bold; opacity: 0.7; padding-left: 4px; }
+    
+    .neu-input { 
+      width: 100%; border: none; border-radius: 14px; padding: 13px; 
+      background: var(--bg); color: var(--text); box-shadow: var(--neu-inset); 
+      font-size: 15px; outline: none; transition: 0.2s;
+    }
+
+    .neu-btn { 
+      width: 100%; padding: 18px; border: none; border-radius: 20px; 
+      background: var(--bg); color: var(--accent); font-weight: bold; 
+      box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light); 
+      cursor: pointer; margin-bottom: 15px; transition: all 0.2s ease; font-size: 16px; 
+    }
+    .neu-btn:active { box-shadow: var(--neu-inset); transform: translateY(2px); }
+
+    .toggle-section { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .toggle-section.show { max-height: 2000px; padding: 5px 0; }
+
+    .food-row { 
+      display: flex; justify-content: space-between; align-items: center; 
+      padding: 14px; border-radius: 16px; margin-bottom: 12px; 
+      box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light); 
+      font-size: 14px; background: var(--bg);
+    }
+    .cancel-btn { 
+      color: #ff5252; cursor: pointer; font-size: 11px; font-weight: bold; 
+      padding: 6px 10px; border-radius: 12px; border: 1px solid #ff5252; margin-left: 10px;
+    }
+
+    .table-container { overflow-x: auto; width: 100%; border-radius: 15px; margin-top: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; background: white; color: #333; }
+    body.dark table { background: #3d4648; color: white; }
+    th, td { padding: 12px 8px; border: 1px solid var(--shadow-dark); text-align: center; }
+    th { background: rgba(0,0,0,0.04); font-weight: bold; }
+    .result-text { font-size: 15px; line-height: 2.0; text-align: left; }
+    .accent-val { color: var(--accent); font-weight: 800; font-size: 1.1em; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="mode-switch">
+    <button id="lBtn" class="mode-btn" onclick="changeMode('light')">기본모드 ☀️</button>
+    <button id="dBtn" class="mode-btn" onclick="changeMode('dark')">다크모드 🌙</button>
+  </div>
+  
+  <div class="header-card">
+    <div class="top-tag">MY DIET PLAN</div>
+    <div class="runner left"><span>🏃‍♂️</span></div>
+    <div class="runner right"><span>🏃‍♂️</span></div>
+    <h1 class="main-greet">목표 달성까지 계속 함께합니다! 🍎</h1>
+    <div id="hello-summary" class="bottom-summary">나의 정보를 입력해주세요.</div>
+  </div>
+
+  <div class="card" style="padding: 15px;">
+    <label class="label">입력 날짜 선택</label>
+    <input type="date" id="uiDate" class="neu-input">
+  </div>
+
+  <div class="section-title">총대사량 산출</div>
+  <div class="card">
+    <div class="input-grid">
+      <div class="input-group"><label class="label">키(cm)</label><input type="number" id="h" class="neu-input" placeholder="175"></div>
+      <div class="input-group"><label class="label">체중(kg)</label><input type="number" id="w" class="neu-input" placeholder="75"></div>
+      <div class="input-group"><label class="label">나이(세)</label><input type="number" id="a" class="neu-input" placeholder="30"></div>
+    </div>
+    <div class="input-grid">
+      <div class="input-group" style="flex: 2;">
+        <label class="label">활동수준</label>
+        <select id="lvl" class="neu-input">
+          <option value="1">거의 없음 (앉아서 생활)</option>
+          <option value="2">가벼운 활동 (주 1~3회)</option>
+          <option value="3" selected>가벼운 활동 (주 3~5회)</option>
+          <option value="4">중고강도활동 (주 1~3회)</option>
+          <option value="5">중고강도활동 (주 4~5회)</option>
+          <option value="6">고강도활동 (주 1~3회)</option>
+          <option value="7">고강도활동 (주 4~5회)</option>
+        </select>
+      </div>
+      <div class="input-group"><label class="label">운동시간(분)</label><input type="number" id="exMin" class="neu-input" placeholder="60"></div>
+    </div>
+  </div>
+
+  <button id="tdeeBtn" class="neu-btn" onclick="toggleTDEE()">총대사량 산출 보기 📊</button>
+  <div id="tdeeSec" class="toggle-section">
+    <div class="card">
+      <div id="tdeeRes" class="result-text">기본 정보를 입력하고 버튼을 눌러주세요.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title" style="background:#34C759;">하루 섭취 칼로리</div>
+    <div class="input-grid" style="align-items: flex-end;">
+      <div class="input-group" style="flex: 1;"><label class="label">음식항목 선택</label><select id="cat" class="neu-input" onchange="onCatSelect()"></select></div>
+      <div class="input-group" style="flex: 1.2;"><label class="label">음식명</label><select id="food" class="neu-input"></select></div>
+      <button class="neu-btn" style="flex: 0.4; padding: 13px; margin: 0; font-size: 13px; height: 45px; border-radius: 14px;" onclick="onFoodAdd()">추가</button>
+    </div>
+    <div class="input-grid" style="align-items: flex-end;">
+      <div class="input-group" style="flex: 1.5;"><label class="label">직접입력</label><input type="text" id="customFood" class="neu-input" placeholder="음식명"></div>
+      <div class="input-group"><label class="label">칼로리</label><input type="number" id="customKcal" class="neu-input" placeholder="kcal"></div>
+      <button class="neu-btn" style="flex: 0.5; padding: 13px; margin: 0; font-size: 13px; height: 45px; border-radius: 14px;" onclick="onCustomFoodAdd()">추가</button>
+    </div>
+    <div id="foodList" style="margin-top: 20px;"></div>
+    <div style="text-align:right; font-weight:bold; margin-top:20px; color:var(--accent); font-size: 17px;">
+      총 섭취: <span id="sumKcal">0</span> kcal
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title" style="background:#FF9500;">감량 목표 설정</div>
+    <div class="input-grid">
+      <div class="input-group"><label class="label">목표 체중(Kg)</label><input type="number" id="tw" class="neu-input" placeholder="65" oninput="updateStatus()"></div>
+      <div class="input-group"><label class="label">칼로리상태(총활동대사량-섭취칼로리)</label><input type="number" id="calStatus" class="neu-input" readonly style="color:var(--accent); font-weight:800;"></div>
+    </div>
+<div id="goalSum" class="result-text" style="margin-top:10px; font-weight: 600;"></div>
+  </div>
+
+  <button id="mapBtn" class="neu-btn" onclick="toggleMap()">나의 감량 로드맵 산출 보기 🗺️</button>
+   <div style="font-size:11px; margin-bottom:20px; opacity:0.8; text-align:center;">위 버튼을 클릭하면 실시간 로드맵이 생성됩니다.</div> 
+  <div id="mapSec" class="toggle-section">
+    <div class="card">
+      <div class="table-container" id="mapRes">정보를 모두 입력하면 로드맵이 생성됩니다.</div>
+    </div>
+  </div>
+</div>
+<script>
+const foodDb = {
+  "밥/죽": { "흰쌀밥1공기(210g)": 300, "현미밥1공기(210g)": 300, "흑미밥1공기(210g)": 270, "보리밥1공기(210g)": 300, "잡곡밥1공기(210g)": 300, "햇반1개(210g)": 315, "돌솥비빔밥1인분": 650,"소고기비빔밥1인분": 600,"나물비빔밥1인분": 400,"볶음밥1인분": 600,"김밥1줄(250g)": 450,"삼각김밥1개": 250,"국밥1인분": 700,"주먹밥1개": 200,"초밥1개": 50,"짬뽕밥1인분": 550,"짜장밥1인분": 550,"잡채밥1인분": 700,"곤드레밥1인분": 400,"계란덮밥1인분": 500,"콘프로스트1인분(30g)": 116,"누룽지한그릇": 750,"야채죽1인분(300g)": 300,"호박죽1인분(350g)": 400,"쌀죽1인분(300g)": 200,"양송이수프1인분(200g)": 200 },
+  "국/찌개": { "김치찌개1대접(400g)": 250, "된장찌개1대접(400g)": 200, "소고기무국1대접(300g)": 110, "미역국1대접(300g)": 120, "콩나물국1대접(300g)": 50, "청국장찌개1대접(400g)": 280, "육개장1대접(500g)": 340, "동태국1대접(400g)": 200, "선짓국1대접(600g)": 300, "설렁탕1대접(500g)": 250, "삼계탕1인분(800g)": 700, "북어국1인분(400g)": 152, "어묵국1인분(200g)": 72, "순대국1대접(400g)": 450, "곰탕1대접(600g)": 450, "갈비탕1대접(500g)": 500 },
+  "김치/나물류": { "배추김치1접시(60g)": 25, "깍두기1접시(60g)": 30, "열무김치1접시(60g)": 20, "섞박지1접시(100g)": 40, "총각김치1접시(100g)": 30, "깻잎1접시(100g)": 50, "도라지1접시(100g)": 50, "시금치1접시(100g)": 23, "시래기1접시(100g)": 30, "숙주나물1접시(100g)": 15, "콩나물무침1접시(100g)": 35 },
+  "조림/볶음/젓갈류": { "달걀조림(60g)": 80, "장조림(100g)": 170, "멸치조림(100g)": 130, "콩자반(100g)": 200, "고추조림(100g)": 70, "고등어조림(100g)": 150, "감자조림(100g)": 130, "두부조림(150g)": 150, "갈치조림(100g)": 120, "김치볶음(100g)": 50, "꽈리고추볶음(100g)": 120, "낙지볶음1인분(300g)": 300, "제육볶음1인분(200g)": 350, "떡볶이1인분(200g)": 300, "닭볶음(200g)": 550, "잡채(200g)": 300, "오징어볶음(200g)": 300, "어묵볶음(110g)": 130, "오징어젓(100g)": 180, "낙지젓(100g)": 180, "명란젓(100g)": 125 },  
+  "구이/튀김/전": { "고등어구이1토막(100g)": 300, "조기구이1마리(80g)": 130, "갈치구이1토막(100g)": 150, "불고기1인분(150g)": 250, "삼겹살1인분(200g)": 650, "꽁치구이(200)": 500, "굴비구이(100g)": 160, "돼지불고기(100g)": 200, "돼지갈비(100g)": 350, "황태구이1인분(200g)": 500, "청어구이(100g)": 200, "장어구이1마리(400g)": 700, "오리고기(100g)": 300, "스테이크1인분(200g)": 500, "곱창구이(200g)": 500, "오징어튀김1개(30g)": 30, "감자튀김1인분(100g)": 300, "돈까스(200g)": 650, "치킨1인분(250g)": 700, "탕수육1인분(300g)": 600, "감자튀김1인분(100g)": 300, "달걀후라이1개": 100, "빈대떡1장(300g)": 500, "김치전1장(130g)": 300, "두부전(100g)": 80, "동태전(100g)": 195, "부추전1장(250g)": 400, "해물파전 1장(300g)": 600, },
+ "면/빵": { "냉면1인분(600g)": 600, "만두1인분(300g)": 400, "국수1인분(600g)": 650, "떡만두국1인분(500g)": 500, "막국수1인분(500g)": 500, "수제비1인분(600g)": 400, "라면1봉지": 500, "짜장면1인분(800g)": 850, "짬뽕1인분(800g)": 700, "쫄면1인분(200g)": 400, "우동1인분(300g)": 400, "칼국수1인분(600g)": 800, "도넛1개(90g)": 300, "샌드위치1개(200g)": 400, "호떡1개(100g)": 250, "바게트1개(250g)": 700, "핫도그1개(100g)": 340, "식빵1조각(35g)": 90, "시루떡1개(200g)": 220, "가래떡1개(120g)": 230, "인절미1접시(100g)": 200, "붕어빵1개(50g)": 120, "햄버거1개(200g)": 500, "단팥빵1개(100g)": 270, "크림빵1개80g)": 300, "소보로빵1개(85g)": 300, "토스트1장(35g)": 200, "케이크1조각(100g)": 400, "카스텔라1개(20g)": 80  }, 
+ "과일/간식": { "사과1개(대과)": 140, "바나나1개": 90, "방울토마토15알(200g)": 30, "배1개(500g)": 300, "감1개(200g)": 100, "복숭아1개(250)": 100, "참외1개(250g)": 100, "포도1송이(400g)": 200, "밤5개(100g)": 150, "귤1개(80g)": 40, "견과류1봉(25g)": 150, "새우깡1봉(90g)": 465, "초코파이1개(35g)": 170, "오징어땅콩1봉지(200g)": 496, "가나초콜릿(70g)": 390, "페레로로쉐1개(12.5g)": 75, "홈런볼1봉지(40g)": 240, "꼬깔콘1봉지(72g)": 385, "프링글스1캔(53g)": 277, "빼빼로1갑": 250, "포카칩1봉지(66g)": 377,  },  
+ "주류/음료/유제품": { "소주1병(360ml)": 400, "맥주500ml": 200, "막걸리1병(750ml)": 350, "와인(레드)1잔(150ml)": 120, "아메리카노1잔(300ml)": 10, "믹스커피1스틱(12g)": 50, "카페모카1잔": 350, "카페라테1잔": 150, "우유1팩(200ml)": 130, "콜라/사이다1캔(250ml)": 110, "오렌지주스1컵(200ml)": 100, "미숫가루(100g)": 350, "팥빙수1인분": 500, "아이스크림1개": 250,  },     
+};
+
+let selectedFoods = []; 
+let tdeeVal = 0;
+
+window.onload = () => {
+  const savedTheme = localStorage.getItem('theme') || 'light'; 
+  changeMode(savedTheme);
+  document.getElementById('uiDate').valueAsDate = new Date();
+  initCategories();
+};
+
+function initCategories() {
+  const catSel = document.getElementById('cat'); 
+  catSel.innerHTML = '';
+  Object.keys(foodDb).forEach(c => { 
+    let opt = document.createElement('option'); opt.value = c; opt.innerText = c; catSel.appendChild(opt); 
+  });
+  onCatSelect();
+}
+
+function changeMode(mode) {
+  const b = document.body; const l = document.getElementById('lBtn'); const d = document.getElementById('dBtn');
+  if(mode === 'dark') { b.classList.add('dark'); d.classList.add('active'); l.classList.remove('active'); localStorage.setItem('theme', 'dark'); }
+  else { b.classList.remove('dark'); l.classList.add('active'); d.classList.remove('active'); localStorage.setItem('theme', 'light'); }
+}
+
+function calculateMetricsLocally(p) {
+  const { height, weight, age, activityLevel, exerciseTime } = p;
+  let bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+  const activityFactors = { "1": 0.1, "2": 0.15, "3": 0.25, "4": 0.35, "5": 0.45, "6": 0.6, "7": 0.8 };
+  const metBase = { "1": 2.5, "2": 3.0, "3": 4.0, "4": 5.0, "5": 6.5, "6": 8.0, "7": 10.0 };
+  const exerciseCal = ( (exerciseTime / 60) * metBase[activityLevel] * weight );
+  const activityCal = Math.round((bmr * activityFactors[activityLevel]) + exerciseCal);
+  const tdee = Math.round(bmr + 400 + activityCal);
+  const bmi = (weight / ((height/100)**2)).toFixed(1);
+  
+  let status = "정상", color = "#2ecc71";
+  if (bmi < 18.5) { status = "저체중"; color = "#3498db"; }
+  else if (bmi >= 23 && bmi < 25) { status = "과체중"; color = "#f39c12"; }
+  else if (bmi >= 25 && bmi < 30) { status = "비만"; color = "#e74c3c"; }
+  else if (bmi >= 30) { status = "고도비만"; color = "#c0392b"; }
+  
+  return { bmi, status, color, bmr: Math.round(bmr), activityCal: Math.round(activityCal), tdee };
+}
+
+function runTDEE() {
+  const h = document.getElementById('h').value, w = document.getElementById('w').value, a = document.getElementById('a').value;
+  const resBox = document.getElementById('tdeeRes');
+  if(!h || !w || !a) { resBox.innerText = "키, 체중, 나이를 모두 입력해 주세요."; return; }
+
+  const res = calculateMetricsLocally({ height: parseFloat(h), weight: parseFloat(w), age: parseInt(a), activityLevel: document.getElementById('lvl').value, exerciseTime: parseFloat(document.getElementById('exMin').value || 0) });
+  tdeeVal = res.tdee;
+  
+  resBox.innerHTML = `
+    1. BMI: <b style="color:${res.color}">${res.bmi} (${res.status})</b><br>
+    2. 기초대사량: <b>${res.bmr}</b> kcal<br>
+    3. 일상활동대사량: <b>400</b> kcal(음식조리, 먹고, 독서, TV보기 등)<br>
+    4. 활동대사량: <b>${res.activityCal}</b> kcal<br>
+    5. 총활동대사량: <b style="color:var(--accent); font-size:18px;">${res.tdee} kcal</b>
+  `;
+  updateStatus();
+}
+
+function toggleTDEE() {
+  const s = document.getElementById('tdeeSec'), b = document.getElementById('tdeeBtn');
+  s.classList.toggle('show');
+  if(s.classList.contains('show')) { b.innerText = "총대사량 산출 닫기 🔚"; b.classList.add('active'); runTDEE(); }
+  else { b.innerText = "총대사량 산출 보기 📊"; b.classList.remove('active'); }
+}
+
+// [식단]
+function onCatSelect() {
+  const cat = document.getElementById('cat').value, fSel = document.getElementById('food');
+  fSel.innerHTML = '';
+  if(foodDb[cat]) Object.keys(foodDb[cat]).forEach(n => { 
+    let opt = document.createElement('option'); opt.value = n; opt.innerText = `${n} (${foodDb[cat][n]}kcal)`; fSel.appendChild(opt); 
+  });
+}
+
+function onFoodAdd() {
+  const cat = document.getElementById('cat').value, name = document.getElementById('food').value;
+  if(!name) return;
+  selectedFoods.push({ name: name, kcal: parseFloat(foodDb[cat][name]), qty: 1 });
+  drawFoods();
+}
+
+function onCustomFoodAdd() {
+  const nIn = document.getElementById('customFood'), kIn = document.getElementById('customKcal');
+  const name = nIn.value.trim(), kcal = parseFloat(kIn.value);
+  if(!name || isNaN(kcal)) return;
+  selectedFoods.push({ name: name, kcal: kcal, qty: 1 });
+  nIn.value = ""; kIn.value = ""; drawFoods();
+}
+
+function drawFoods() {
+  const box = document.getElementById('foodList'); box.innerHTML = ""; let total = 0;
+  selectedFoods.forEach((it, i) => {
+    total += it.kcal * it.qty;
+    box.innerHTML += `
+      <div class="food-row">
+        <div style="flex:1;"><b>${it.name}</b> <span style="font-size:11px; opacity:0.7;">(${Math.round(it.kcal * it.qty)}kcal)</span></div>
+        <div style="display:flex; align-items:center;">
+          <input type="number" class="neu-input" style="width:50px; padding:8px; text-align:center;" value="${it.qty}" step="0.1" onchange="editQty(${i}, this.value)">
+          <span style="font-size:12px; margin-left:5px;">배</span>
+          <span class="cancel-btn" onclick="removeFood(${i})">취소(X)</span>
+        </div>
+      </div>`;
+  });
+  document.getElementById('sumKcal').innerText = Math.round(total);
+  updateStatus();
+}
+
+function editQty(i, v) { selectedFoods[i].qty = parseFloat(v) || 0; drawFoods(); }
+function removeFood(i) { selectedFoods.splice(i, 1); drawFoods(); }
+
+function updateStatus() {
+  const intake = parseFloat(document.getElementById('sumKcal').innerText) || 0;
+  const diff = tdeeVal - intake;
+  document.getElementById('calStatus').value = Math.round(diff);
+  
+  const cw = parseFloat(document.getElementById('w').value);
+  const tw = parseFloat(document.getElementById('tw').value);
+  const goalBox = document.getElementById('goalSum');
+
+  if (!cw || !tw || !tdeeVal) {
+    goalBox.innerHTML = "<span style='color: #e74c3c; font-weight: bold;'>필요한 정보를 입력하세요.</span>";
+    document.getElementById('hello-summary').innerText = "나의 정보를 입력해주세요.";
+    return;
+  }
+
+  const lose = (cw - tw).toFixed(1);
+  const days = diff > 0 ? Math.round((lose * 7700) / diff) : 0;
+  
+  const h = parseFloat(document.getElementById('h').value), bmi = cw / ((h / 100) ** 2);
+  let bmiInfo = "";
+  if (bmi >= 23) {
+    const iw = (22 * ((h / 100) ** 2)).toFixed(1);
+    bmiInfo = ` (적정체중: ${iw}kg, 체중조절: -${(cw - iw).toFixed(1)}kg)`;
+  }
+
+  let html = `감량 목표: ${lose}kg${bmiInfo}<br>`;
+  html += `일일 소모 차이: ${Math.round(diff)}kcal<br>`;
+  html += `예상 달성 일수: ${days}일`;
+
+  if (diff <= 0) {
+    html += `<br><span style="color: #e74c3c; font-weight: bold;">칼로리 차이를 플러스(+)로 만드세요.</span>`;
+  }
+
+  goalBox.innerHTML = html;
+  
+  document.getElementById('hello-summary').innerText = `목표:${lose}kg 감량, 예상:${days > 0 ? days + '일' : '-'} 🔥`;
+}
+
+function runMap() {
+  const cw = parseFloat(document.getElementById('w').value), gw = parseFloat(document.getElementById('tw').value), st = parseFloat(document.getElementById('calStatus').value);
+  const box = document.getElementById('mapRes');
+  
+  if(!cw || !gw) { box.innerText = "필요한 정보를 모두 입력해 주세요."; return; }
+  if(cw <= gw) { box.innerHTML = "<b style='color:#ff5252;'>목표 체중은 현재 체중보다 낮게 설정해야 합니다.</b>"; return; }
+  if(st <= 50) { box.innerText = "칼로리 소모 차이가 너무 적어 로드맵을 생성할 수 없습니다."; return; }
+  
+  let list = [];
+  let tempWeight = cw;
+  while (tempWeight > gw && list.length < 15) {
+    let nextWeight = Math.max(gw, tempWeight - 1);
+    let cumulativeDays = Math.round(((cw - nextWeight) * 7700) / st);
+    let period = cumulativeDays - (list.length > 0 ? list[list.length-1].cumVal : 0);
+    list.push({ target: nextWeight.toFixed(1) + "kg", period: period + "일", cumulative: cumulativeDays + "일", cumVal: cumulativeDays });
+    tempWeight = nextWeight;
+  }
+
+  let h = `<b>총 예상 소요일: ${list[list.length-1].cumulative}</b><br><table><tr><th>목표</th><th>소요</th><th>누적</th></tr>`;
+  list.forEach(r => { h += `<tr><td>${r.target}</td><td>${r.period}</td><td>${r.cumulative}</td></tr>`; });
+  box.innerHTML = h + "</table>";
+}
+
+function toggleMap() {
+  const s = document.getElementById('mapSec'), b = document.getElementById('mapBtn');
+  s.classList.toggle('show');
+  if(s.classList.contains('show')) { b.innerText = "나의 감량 로드맵 산출 닫기 🔚"; b.classList.add('active'); runMap(); }
+  else { b.innerText = "나의 감량 로드맵 산출 보기 🗺️"; b.classList.remove('active'); }
+}
+</script>
+</body>
+</html>
