@@ -25,7 +25,7 @@
       --accent: #007AFF;
       --accent-emerald: #34C759;
       --text: #31344b;
-      --card-line: linear-gradient(90deg, #007AFF, #00C6FF);
+      --card-line: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF);
       --neu-inset: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff;
     }
     body.dark {
@@ -35,7 +35,7 @@
       --accent: #00d2ff;
       --accent-emerald: #34C759;
       --text: #ffffff;
-      --card-line: linear-gradient(90deg, #00d2ff, #3a7bd5);
+      --card-line: linear-gradient(90deg, #ff758c, #ff7eb3, #a18cd1, #fbc2eb);
       --neu-inset: inset 3px 3px 6px #101217, inset -3px -3px 6px #2c313d;
     }
     
@@ -69,10 +69,127 @@
       color: white; border-radius: 28px; padding: 35px 20px;
       margin-bottom: 30px; box-shadow: 0 12px 24px rgba(0,0,0,0.12);
       text-align: center; width: 100%; position: relative; overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .header-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 32px rgba(0, 122, 255, 0.3);
     }
     .header-card .top-tag { font-size: 11px; font-weight: bold; opacity: 0.8; margin-bottom: 8px; letter-spacing: 1.5px; text-transform: uppercase; }
-    .header-card .main-greet { font-size: 22px; font-weight: 800; margin-bottom: 12px; line-height: 1.2; word-break: keep-all; }
+    .header-card .main-greet { font-size: 22px; font-weight: 800; margin-bottom: 12px; line-height: 1.2; word-break: keep-all; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
     .header-card .bottom-summary { font-size: 14px; font-weight: 500; opacity: 0.95; line-height: 1.4; }
+
+    .kite-container { 
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+      pointer-events: none; z-index: 1; overflow: hidden; border-radius: 28px; 
+    }
+    
+    /* 방패연 전체 래퍼 애니메이션 */
+    .kite-wrapper {
+      position: absolute;
+      width: 24px;
+      height: 75px; /* 방패연 몸통 + 꼬리 길이 축소 고려 */
+      transition: left 4s ease-in-out, top 4s ease-in-out, transform 4s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+    }
+
+    /* 방패연 몸통 */
+    .kite-body {
+      width: 24px;
+      height: 34px;
+      background: white;
+      border: 1.5px solid rgba(51, 65, 85, 0.8);
+      border-radius: 2px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* 연살 (가로, 세로, 대각선) */
+    .kite-body::before, .kite-body::after, 
+    .kite-cross-1, .kite-cross-2 {
+      content: '';
+      position: absolute;
+      background: rgba(120, 53, 15, 0.4);
+    }
+    .kite-body::before { width: 100%; height: 1px; top: 50%; }
+    .kite-body::after { width: 1px; height: 100%; left: 50%; }
+    .kite-cross-1 { width: 140%; height: 1px; transform: rotate(55deg); }
+    .kite-cross-2 { width: 140%; height: 1px; transform: rotate(-55deg); }
+
+    /* 태극 문양 & 중앙 구멍 */
+    .kite-taegeuk {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1px solid #cbd5e1;
+      background: white;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .kite-hole {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid #334155;
+      position: absolute;
+      z-index: 20;
+    }
+
+    /* 꼬리 애니메이션 설정 */
+    @keyframes tailWiggle {
+      0% { transform: rotate(-20deg) skewX(-15deg); }
+      25% { transform: rotate(25deg) skewX(18deg); }
+      50% { transform: rotate(-28deg) skewX(-20deg); }
+      75% { transform: rotate(20deg) skewX(12deg); }
+      100% { transform: rotate(-20deg) skewX(-15deg); }
+    }
+    @keyframes pathWiggle1 {
+      0% { d: path("M 9,0 Q 18,15 2,30 T 14,60"); }
+      50% { d: path("M 9,0 Q 0,15 16,30 T 4,60"); }
+      100% { d: path("M 9,0 Q 18,15 2,30 T 14,60"); }
+    }
+    @keyframes pathWiggle2 {
+      0% { d: path("M 9,0 Q 0,15 16,30 T 4,60"); }
+      50% { d: path("M 9,0 Q 18,15 2,30 T 14,60"); }
+      100% { d: path("M 9,0 Q 0,15 16,30 T 4,60"); }
+    }
+
+    .kite-tail-wrapper {
+      transform-origin: top center;
+      animation: tailWiggle 2.2s infinite ease-in-out;
+      margin-top: -2px; /* 꼬리가 몸통에 살짝 걸치도록 */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .kite-tail-path-1 {
+      animation: pathWiggle1 1.8s infinite ease-in-out;
+    }
+    .kite-tail-path-2 {
+      animation: pathWiggle2 1.8s infinite ease-in-out;
+    }
+
+    .scroll-top-btn {
+      position: fixed; bottom: 25px; right: 25px; width: 46px; height: 46px; border-radius: 50%;
+      background: var(--accent); color: white; border: none; font-size: 20px; font-weight: bold;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.25); cursor: pointer; opacity: 0; transform: translateY(20px);
+      pointer-events: none; transition: all 0.3s ease; z-index: 9999; display: flex; align-items: center; justify-content: center;
+    }
+    .scroll-top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .scroll-top-btn:active { transform: scale(0.92); }
 
     .runner { position: absolute; bottom: 8px; font-size: 26px; pointer-events: none; width: 40px; z-index: 1; }
     .runner.left { left: -50px; animation: moveRight 14s linear infinite; }
@@ -85,6 +202,12 @@
       background: var(--bg); border-radius: 24px; padding: 22px; 
       box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); 
       margin-bottom: 25px; position: relative; width: 100%; 
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+      z-index: 10;
     }
     .card::before { 
       content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; 
@@ -92,9 +215,10 @@
     }
 
     .section-title { 
-      background: var(--accent); color: white; border-radius: 14px; padding: 12px; 
+      background: var(--card-line); color: white; border-radius: 14px; padding: 12px; 
       font-weight: bold; margin-bottom: 20px; text-align: center; font-size: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
 
     .input-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 15px; }
@@ -140,7 +264,6 @@
     th { background: rgba(0,0,0,0.04); font-weight: bold; }
     .result-text { font-size: 15px; line-height: 2.0; text-align: left; }
 
-    /* 실시간 영양 검색 디자인 */
     .search-box-container {
       background: rgba(0,0,0,0.03); padding: 16px; border-radius: 20px; margin-bottom: 22px;
       box-shadow: var(--neu-inset); border: 1px solid rgba(255,255,255,0.1);
@@ -161,27 +284,6 @@
     .sm-btn { padding: 8px 12px; font-size: 12px; border: none; border-radius: 10px; background: var(--bg); color: var(--text); box-shadow: 2px 2px 5px var(--shadow-dark), -2px -2px 5px var(--shadow-light); cursor: pointer; font-weight: bold; }
     .sm-btn.primary { color: #ffffff; background: var(--accent-emerald); }
 
-    /* 타임라인 로그 스타일 */
-    .log-card {
-      padding: 16px; border-radius: 20px; background: var(--bg); margin-bottom: 15px;
-      box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
-      position: relative; text-align: left;
-    }
-    .log-card .log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 12px; opacity: 0.8; }
-    .log-card .log-header-right { display: flex; align-items: center; gap: 8px; }
-    .log-card .log-tag { background: #ff9500; color: white; padding: 4px 8px; border-radius: 8px; font-weight: bold; }
-    .log-card .log-content { font-size: 14px; font-weight: bold; margin-bottom: 6px; line-height: 1.4; }
-    .log-card .log-kcal { color: var(--accent); font-weight: bold; font-size: 13px; }
-    
-    .log-delete-icon-btn { 
-      background: none; border: none; cursor: pointer; 
-      color: #ff5252; padding: 4px; border-radius: 8px;
-      transition: all 0.2s ease; display: flex; align-items: center; justify-content: center;
-    }
-    .log-delete-icon-btn:hover { background: rgba(255, 82, 82, 0.1); transform: scale(1.08); }
-    .log-delete-icon-btn svg { width: 18px; height: 18px; fill: currentColor; }
-
-    /* 커스텀 다국어 달력 디자인 */
     .custom-cal-modal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.4); z-index: 2000; justify-content: center; align-items: center; padding: 20px;
@@ -235,11 +337,40 @@
   </div>
   
   <div class="header-card">
-    <div class="top-tag">MY DIET PLAN</div>
+    <div class="kite-container" id="kiteArea">
+      <!-- HTML+CSS 방식의 방패연 구현 -->
+      <div id="flyingKite" class="kite-wrapper" style="left: 10%; top: 10%;">
+        <!-- 방패연 몸통 -->
+        <div class="kite-body">
+          <div class="kite-cross-1"></div>
+          <div class="kite-cross-2"></div>
+          
+          <!-- 태극 문양 -->
+          <div class="kite-taegeuk">
+            <svg viewBox="0 0 100 100" style="width:100%; height:100%; position:absolute;">
+              <path d="M 50,0 A 50,50 0 0,1 50,100 A 25,25 0 0,1 50,50 A 25,25 0 0,0 50,0 Z" fill="#EF4444" />
+              <path d="M 50,100 A 50,50 0 0,1 50,0 A 25,25 0 0,1 50,50 A 25,25 0 0,0 50,100 Z" fill="#2563EB" />
+            </svg>
+            <!-- 정중앙 구멍 -->
+            <div class="kite-hole"></div>
+          </div>
+        </div>
+        
+        <!-- 흔들리는 꼬리 부분 (축소된 크기 적용) -->
+        <div class="kite-tail-wrapper">
+          <svg width="12" height="38" viewBox="0 0 18 65" style="overflow:visible;">
+            <path class="kite-tail-path-1" d="M 9,0 Q 18,15 9,30 T 9,60" fill="none" stroke="#EF4444" stroke-width="4" stroke-linecap="round" />
+            <path class="kite-tail-path-2" d="M 9,0 Q 2,15 16,30 T 4,60" fill="none" stroke="#2563EB" stroke-width="3" stroke-linecap="round" />
+          </svg>
+        </div>
+      </div>
+    </div>
+    
+    <div class="top-tag" style="position: relative; z-index: 2;">MY DIET PLAN</div>
     <div class="runner left"><span>🏃‍♂️</span></div>
     <div class="runner right"><span>🏃‍♂️</span></div>
-    <h1 class="main-greet" id="t_mainGreet">목표 달성까지 계속 함께합니다! 🍎</h1>
-    <div id="hello-summary" class="bottom-summary">나의 정보를 입력해주세요.</div>
+    <h1 class="main-greet" id="t_mainGreet" style="position: relative; z-index: 2;">목표 달성까지 계속 함께합니다! 🍎</h1>
+    <div id="hello-summary" class="bottom-summary" style="position: relative; z-index: 2;">나의 정보를 입력해주세요.</div>
   </div>
 
   <div class="card" style="padding: 15px;">
@@ -318,15 +449,6 @@
     <div style="text-align:right; font-weight:bold; margin-top:20px; color:var(--text); font-size: 17px;" id="t_totalIntakeBox">
       총 섭취: <span id="sumKcal" style="color:var(--accent); font-size:22px;">0</span> kcal
     </div>
-
-    <button class="neu-btn" style="background: linear-gradient(90deg, #16a34a, #34C759); color: white; margin-top: 15px; border-radius: 15px; margin-bottom: 15px;" id="t_logAddBtn" onclick="saveCurrentMealLog()">➕ 식사 기록 추가하기</button>
-    
-    <button id="timelineBtn" class="neu-btn" style="color: var(--accent); margin-bottom: 5px;" onclick="toggleTimeline()">누적 식사 일기 타임라인 로그 보기 🗂️</button>
-    <div id="timelineSec" class="toggle-section">
-      <div id="timelineLogs" style="padding: 5px 0;">
-        <div style="text-align: center; opacity: 0.5; padding: 20px 10px; font-size: 14px;" id="t_logPlaceholder">저장된 식사 일기 기록이 없습니다.</div>
-      </div>
-    </div>
   </div>
 
   <div class="card">
@@ -349,7 +471,9 @@
   </div>
 </div>
 
-<!-- 커스텀 다국어 달력 모달 레이어 -->
+<!-- 최상단 이동 퀵 스크롤 버튼 -->
+<button id="scrollTopBtn" class="scroll-top-btn" onclick="scrollToTop()">↑</button>
+
 <div id="customCalModal" class="custom-cal-modal" onclick="closeCustomCalendar(event)">
   <div class="cal-box" onclick="event.stopPropagation()">
     <div class="cal-nav-header">
@@ -369,7 +493,6 @@
 </div>
 
 <script>
-/* --- 다국어 및 달력 번역 데이터셋 --- */
 const i18n = {
   ko: {
     mainGreet: "목표 달성까지 계속 함께합니다! 🍎", infoRequired: "나의 정보를 입력해주세요.",
@@ -380,8 +503,7 @@ const i18n = {
     searchPlaceholder: "음식명 검색 (예: 신라면, 햇반, 요거트)", searchDefaultMsg: "검색어를 입력 후 검색 버튼을 누르시면 실시간 영양 정보가 노출됩니다.",
     lblCat: "음식항목 선택", lblFood: "음식명", lblQty: "수량(x)", addBtn: "추가", lblCustomName: "직접입력(음식명)", lblCustomKcal: "칼로리(kcal)",
     phCustomFoodName: "음식명",
-    totalIntake: "총 섭취: ", logAddBtn: "➕ 식사 기록 추가하기", timelineBtnShow: "누적 식사 일기 타임라인 로그 보기 🗂️", timelineBtnHide: "누적 식사 일기 타임라인 로그 닫기 🔚",
-    logPlaceholder: "저장된 식사 일기 기록이 없습니다.", lblTargetW: "목표 체중(Kg)", lblCalStatus: "칼로리상태(총활동대사량-섭취칼로리)",
+    totalIntake: "총 섭취: ", lblTargetW: "목표 체중(Kg)", lblCalStatus: "칼로리상태(총활동대사량-섭취칼로리)",
     mapBtnShow: "나의 감량 로드맵 산출 보기 🗺️", mapBtnHide: "나의 감량 로드맵 산출 닫기 🔚", mapTip: "위 버튼을 클릭하면 실시간 로드맵이 생성됩니다.",
     customCategoryTag: "⭐ 직접 입력한 음식", msgInputAll: "키, 체중, 나이를 모두 입력해 주세요.", msgFillAll: "필요한 정보를 입력하세요.",
     msgTargetLow: "목표 체중은 현재 체중보다 낮게 설정해야 합니다.", msgDeficitLow: "칼로리 소모 차이가 너무 적어 로드맵을 생성할 수 없습니다.",
@@ -399,8 +521,7 @@ const i18n = {
     searchPlaceholder: "Search food name (e.g., Chicken, Salad, Bread)", searchDefaultMsg: "Enter keywords and click search to view real-time nutritional facts.",
     lblCat: "Select Category", lblFood: "Food Name", lblQty: "Qty(x)", addBtn: "Add", lblCustomName: "Manual Entry (Food Name)", lblCustomKcal: "Calories (kcal)",
     phCustomFoodName: "Food Name",
-    totalIntake: "Total Intake: ", logAddBtn: "➕ Add to Meal Diary", timelineBtnShow: "View Accumulated Meal Logs 🗂️", timelineBtnHide: "Close Accumulated Meal Logs 🔚",
-    logPlaceholder: "No meal diary records saved.", lblTargetW: "Target Weight(Kg)", lblCalStatus: "Calorie Status (TDEE - Intake)",
+    totalIntake: "Total Intake: ", lblTargetW: "Target Weight(Kg)", lblCalStatus: "Calorie Status (TDEE - Intake)",
     mapBtnShow: "View Weight Loss Roadmap 🗺️", mapBtnHide: "Close Weight Loss Roadmap 🔚", mapTip: "Click the button above to generate a real-time roadmap.",
     customCategoryTag: "⭐ Directly Entered Food", msgInputAll: "Please enter your height, weight, and age.", msgFillAll: "Please enter required information.",
     msgTargetLow: "Target weight must be lower than current weight.", msgDeficitLow: "Calorie deficit is too low to generate a roadmap.",
@@ -418,15 +539,14 @@ const i18n = {
     searchPlaceholder: "食品名を入力 (例: ステーキ, サラダ, 食パン)", searchDefaultMsg: "検索語を入力して検索ボタンを押すと、リアルタイムで栄養情報が表示されます。",
     lblCat: "カテゴリ選択", lblFood: "食品名", lblQty: "数量(x)", addBtn: "追加", lblCustomName: "直接入力(食品名)", lblCustomKcal: "カロリー(kcal)",
     phCustomFoodName: "食品名",
-    totalIntake: "総摂取量: ", logAddBtn: "➕ 食事記録を追加する", timelineBtnShow: "食事日記のタイムライン履歴を見る 🗂️", timelineBtnHide: "食事日記의 타임라인 로그 닫기 🔚",
-    logPlaceholder: "保存された食事履歴がありません。", lblTargetW: "目標体重(Kg)", lblCalStatus: "カロリー収支 (総代謝量 - 摂取カロリー)",
+    totalIntake: "総摂取量: ", lblTargetW: "目標体重(Kg)", lblCalStatus: "カロリー収支 (総代謝量 - 摂取カロリー)",
     mapBtnShow: "減量ロードマップを見る 🗺️", mapBtnHide: "減量ロードマップを閉じる 🔚", mapTip: "上のボタンをクリックすると、リアルタイムでロードマップが生成されます。",
-    customCategoryTag: "⭐ 直接入力した食品", msgInputAll: "身長、体重、年齢をすべて入力してください。", msgFillAll: "必要な 정보를 입력하세요.",
+    customCategoryTag: "⭐ 直接入力した食品", msgInputAll: "身長、体重、年齢をすべて入力してください。", msgFillAll: "必要な情報を入力してください。",
     msgTargetLow: "目標体重は現在の体重より低く設定する必要があります。", msgDeficitLow: "カロリー赤字が少なすぎるため、ロードマップを生成できません。",
     mealTimes: ["🌅 朝食", "☀️ 昼食", "🌙 夕食", "🍰 間食/その他"],
-    activityLevels: ["ほぼなし (デスクワーク中心)", "軽い活動 (週1~3回)", "軽い活動 (週3~5回)", "中高強度の活動 (週1~3回)", "中高強度の活動 (週4~5回)", "高強度の活動 (週1~3回)", "高強度の活動 (週4~5回)"],
+    activityLevels: ["ほぼなし (デスクワーク中心)", "軽い活動 (週1~3回)", "軽い活動 (週3~5回)", "中高強度の活動 (週1~3回)", "中高強度の活動 (週4~5回)", "高強度の活動 (週1~3回)", "高強도의活動 (週4~5回)"],
     mapHeaders: ["目標", "期間", "累積"], servingText: "基準", selectText: "選択", directAddText: "すぐ追加", timesText: "倍",
-    calWeeks: ["日", "月", "화", "水", "木", "金", "土"], calYearSuffix: "年 ", calMonthSuffix: "月", calToday: "今日", calClear: "削除"
+    calWeeks: ["日", "月", "火", "水", "木", "金", "土"], calYearSuffix: "年 ", calMonthSuffix: "月", calToday: "今日", calClear: "削除"
   },
   zh: {
     mainGreet: "一路陪伴您达成减重目标！ 🍎", infoRequired: "请输入您的基本信息。",
@@ -437,8 +557,7 @@ const i18n = {
     searchPlaceholder: "输入食品名称 (如: 米饭, 饺子, 炒菜)", searchDefaultMsg: "输入关键词并点击搜索以查看实时营养成分。",
     lblCat: "选择类别", lblFood: "食品名称", lblQty: "数量(x)", addBtn: "添加", lblCustomName: "手动输入(食品名)", lblCustomKcal: "卡路里(kcal)",
     phCustomFoodName: "食品名称",
-    totalIntake: "总摄入: ", logAddBtn: "➕ 添加到饮食日记", timelineBtnShow: "查看累计饮食日志 🗂️", timelineBtnHide: "关闭累计饮食日志 🔚",
-    logPlaceholder: "暂无保存的饮食日记记录。", lblTargetW: "目标体重(Kg)", lblCalStatus: "卡路里状态 (总代谢 - 摄入)",
+    totalIntake: "总摄入: ", lblTargetW: "目标体重(Kg)", lblCalStatus: "卡路里状态 (总代谢 - 摄入)",
     mapBtnShow: "查看减重路线图 🗺️", mapBtnHide: "关闭减重路线图 🔚", mapTip: "点击上方按钮即可实时生成路线图。",
     customCategoryTag: "⭐ 手动输入的食品", msgInputAll: "请输入您的身高、体重和年龄。", msgFillAll: "请填写必要的信息。",
     msgTargetLow: "目标体重必须低于当前体重。", msgDeficitLow: "卡路里缺口太小，无法生成路线图。",
@@ -449,7 +568,6 @@ const i18n = {
   }
 };
 
-/* --- 4개국 정밀화 마스터 푸드 DB 세트 --- */
 const foodDbMaster = {
   ko: {
     "밥/죽": {
@@ -514,7 +632,6 @@ const foodDbMaster = {
       "팥빙수1인분": 500, "아이스크림1개": 250
     }
   },
-  /* [요청 사항 반영] 첨부해 주신 그림 파일 기반 영어권 DB 전면 전사 매칭 적용 */
   en: {
     "Rice/Grains": {
       "White Rice (1 bowl, 210g)": 300, "Brown Rice (1 bowl, 210g)": 300, "Oatmeal (1 bowl, 230g)": 150,
@@ -561,7 +678,6 @@ const foodDbMaster = {
       "Whole Milk (200ml)": 130
     }
   },
-  /* [요청 사항 반영] 일본 건강 식단에 특화한 일본 정밀 푸드 세분화 카테고리 매칭 */
   jp: {
     "主食(ご飯・お粥)": {
       "白ご飯(1杯 150g)": 240, "玄米ご飯(1杯 150g)": 230, "赤飯(1杯)": 290, "麦ご飯(1杯)": 230,
@@ -597,7 +713,6 @@ const foodDbMaster = {
       "コーラ(1缶)": 140, "ビール(350ml)": 140, "日本酒(1合)": 190, "プロテインシェイク": 160
     }
   },
-  /* [요청 사항 반영] 중화권 실생활 다이어트 식단에 최적화한 중국 정밀 푸드 세분화 카테고리 매칭 */
   zh: {
     "主食(米饭/粥)": {
       "白米饭(1碗 150g)": 230, "糙米饭(1碗)": 220, "燕麦粥(1碗)": 130, "小米粥(1碗)": 110,
@@ -637,7 +752,6 @@ const foodDbMaster = {
 
 let currentLang = "ko"; 
 let selectedFoods = []; 
-let savedMealLogs = []; 
 let tdeeVal = 0;
 
 let calSelectedDate = new Date();
@@ -649,28 +763,23 @@ window.onload = () => {
   changeMode(savedTheme);
   setCalDateInputValue(calSelectedDate);
   
-  /* --- [요청 사항 반영] 웹 초기 구동 시 임의 유저 혹은 다중 계정 초기화 체크 루틴 탑재 --- */
   handleUserAccountSession(); 
-  
   changeLanguage("ko");
-  loadMealLogs();
+
+  // 방패연 초기 배치 및 주기적 비행 시작
+  moveKite();
+  setInterval(moveKite, 3000);
 };
 
-/* --- [요청 사항 반영] 다른 계정 로그인 시 초기화 및 로컬 데이터 갱신 제어 모듈 --- */
 function handleUserAccountSession() {
-  // 실제 다른 계정 식별 키 혹은 토큰이 세션이나 변수로 유입되는 가상 트리거를 모방합니다.
-  // 여기서는 다른 계정으로 연동 실행 시 다른 키의 스토리지 세션이 되도록 제어 가능하며,
-  // 변경점이 발견될 시 기존 캐시 데이터를 클리어하고 직접 입력 푸드 목록을 클린 리셋 및 강제 갱신합니다.
   const currentAccountKey = "user_default_account"; 
   const lastAccountKey = localStorage.getItem('last_logged_account');
   
   if (lastAccountKey && lastAccountKey !== currentAccountKey) {
-    // 다른 계정으로 감지되었으므로, 이전 사용자의 직접 입력 음식과 임시 데이터를 전체 리셋(초기화)합니다.
     localStorage.removeItem('localCustomFoodDb_ko');
     localStorage.removeItem('localCustomFoodDb_en');
     localStorage.removeItem('localCustomFoodDb_jp');
     localStorage.removeItem('localCustomFoodDb_zh');
-    localStorage.removeItem('dietMealLogs');
   }
   localStorage.setItem('last_logged_account', currentAccountKey);
 }
@@ -705,7 +814,6 @@ function changeLanguage(lang) {
   
   document.getElementById('t_lblCustomName').innerText = pack.lblCustomName;
   document.getElementById('t_lblCustomKcal').innerText = pack.lblCustomKcal;
-  document.getElementById('t_logAddBtn').innerText = pack.logAddBtn;
   document.getElementById('customFood').placeholder = pack.phCustomFoodName;
   document.getElementById('t_lblTargetW').innerText = pack.lblTargetW;
   document.getElementById('t_lblCalStatus').innerText = pack.lblCalStatus;
@@ -738,13 +846,11 @@ function changeLanguage(lang) {
   updateStatus();
   if(document.getElementById('tdeeSec').classList.contains('show')) runTDEE();
   if(document.getElementById('mapSec').classList.contains('show')) runMap();
-  renderTimelineLogs();
 }
 
 function updateButtonLabels() {
   const pack = i18n[currentLang];
   document.getElementById('tdeeBtn').innerText = document.getElementById('tdeeSec').classList.contains('show') ? pack.tdeeBtnHide : pack.tdeeBtnShow;
-  document.getElementById('timelineBtn').innerText = document.getElementById('timelineSec').classList.contains('show') ? pack.timelineBtnHide : pack.timelineBtnShow;
   document.getElementById('mapBtn').innerText = document.getElementById('mapSec').classList.contains('show') ? pack.mapBtnHide : pack.mapBtnShow;
 }
 
@@ -757,7 +863,6 @@ function saveCustomDbToStorage(name, kcal) {
   let currentDb = getCustomDbFromStorage();
   currentDb[name] = Math.round(kcal);
   localStorage.setItem('localCustomFoodDb_' + currentLang, JSON.stringify(currentDb));
-  /* --- [요청 사항 반영] 직접 입력 데이터가 세션 변동 등으로 변경될 때 UI 셀렉트박스를 즉시 갱신 --- */
   initCategories(); 
 }
 
@@ -943,10 +1048,31 @@ function calculateMetricsLocally(p) {
   const activityCal = Math.round((bmr * activityFactors[activityLevel]) + exerciseCal);
   const tdee = Math.round(bmr + 400 + activityCal); const bmi = (weight / ((height/100)**2)).toFixed(1);
   let status = "Normal", color = "#2ecc71";
-  if (bmi < 18.5) { status = "Underweight"; color = "#3498db"; }
-  else if (bmi >= 23 && bmi < 25) { status = "Overweight"; color = "#f39c12"; }
-  else if (bmi >= 25 && bmi < 30) { status = "Obese"; color = "#e74c3c"; }
-  else if (bmi >= 30) { status = "Severely Obese"; color = "#c0392b"; }
+  
+  if (currentLang === "ko") {
+    if (bmi < 18.5) { status = "저체중"; color = "#3498db"; }
+    else if (bmi >= 23 && bmi < 25) { status = "과체중"; color = "#f39c12"; }
+    else if (bmi >= 25 && bmi < 30) { status = "비만"; color = "#e74c3c"; }
+    else if (bmi >= 30) { status = "고도비만"; color = "#c0392b"; }
+    else { status = "정상"; }
+  } else if (currentLang === "jp") {
+    if (bmi < 18.5) { status = "低体重"; color = "#3498db"; }
+    else if (bmi >= 23 && bmi < 25) { status = "過体重"; color = "#f39c12"; }
+    else if (bmi >= 25 && bmi < 30) { status = "肥満"; color = "#e74c3c"; }
+    else if (bmi >= 30) { status = "高度肥満"; color = "#c0392b"; }
+    else { status = "普通体重"; }
+  } else if (currentLang === "zh") {
+    if (bmi < 18.5) { status = "体重过低"; color = "#3498db"; }
+    else if (bmi >= 23 && bmi < 25) { status = "超重"; color = "#f39c12"; }
+    else if (bmi >= 25 && bmi < 30) { status = "肥胖"; color = "#e74c3c"; }
+    else if (bmi >= 30) { status = "重度肥胖"; color = "#c0392b"; }
+    else { status = "正常"; }
+  } else {
+    if (bmi < 18.5) { status = "Underweight"; color = "#3498db"; }
+    else if (bmi >= 23 && bmi < 25) { status = "Overweight"; color = "#f39c12"; }
+    else if (bmi >= 25 && bmi < 30) { status = "Obese"; color = "#e74c3c"; }
+    else if (bmi >= 30) { status = "Severely Obese"; color = "#c0392b"; }
+  }
   return { bmi, status, color, bmr: Math.round(bmr), activityCal: Math.round(activityCal), tdee };
 }
 
@@ -955,8 +1081,13 @@ function runTDEE() {
   const resBox = document.getElementById('tdeeRes'); if(!h || !w || !a) { resBox.innerText = i18n[currentLang].msgInputAll; return; }
   const res = calculateMetricsLocally({ height: parseFloat(h), weight: parseFloat(w), age: parseInt(a), activityLevel: document.getElementById('lvl').value, exerciseTime: parseFloat(document.getElementById('exMin').value || 0) });
   tdeeVal = res.tdee;
+  
   if (currentLang === "ko") {
     resBox.innerHTML = `1. BMI: <b style="color:${res.color}">${res.bmi} (${res.status})</b><br>2. 기초대사량: <b>${res.bmr}</b> kcal<br>3. 일상활동대사량: <b>400</b> kcal<br>4. 활동대사량: <b>${res.activityCal}</b> kcal<br>5. 총활동대사량: <b style="color:var(--accent); font-size:18px;">${res.tdee} kcal</b>`;
+  } else if (currentLang === "jp") {
+    resBox.innerHTML = `1. BMI: <b style="color:${res.color}">${res.bmi} (${res.status})</b><br>2. 基礎代謝量: <b>${res.bmr}</b> kcal<br>3. 日常活動代謝量: <b>400</b> kcal<br>4. 活動代謝量: <b>${res.activityCal}</b> kcal<br>5. 総代謝量(TDEE): <b style="color:var(--accent); font-size:18px;">${res.tdee} kcal</b>`;
+  } else if (currentLang === "zh") {
+    resBox.innerHTML = `1. BMI: <b style="color:${res.color}">${res.bmi} (${res.status})</b><br>2. 基础代谢率: <b>${res.bmr}</b> kcal<br>3. 日常活动消耗: <b>400</b> kcal<br>4. 运动消耗: <b>${res.activityCal}</b> kcal<br>5. 总消耗量(TDEE): <b style="color:var(--accent); font-size:18px;">${res.tdee} kcal</b>`;
   } else {
     resBox.innerHTML = `1. BMI: <b style="color:${res.color}">${res.bmi} (${res.status})</b><br>2. BMR: <b>${res.bmr}</b> kcal<br>3. Daily Activity: <b>400</b> kcal<br>4. Exercise Energy: <b>${res.activityCal}</b> kcal<br>5. TDEE: <b style="color:var(--accent); font-size:18px;">${res.tdee} kcal</b>`;
   }
@@ -964,6 +1095,7 @@ function runTDEE() {
 }
 
 function toggleTDEE() { const s = document.getElementById('tdeeSec'); s.classList.toggle('show'); updateButtonLabels(); if(s.classList.contains('show')) runTDEE(); }
+
 function onFoodAdd() {
   const cat = document.getElementById('cat').value, name = document.getElementById('food').value;
   const qty = parseFloat(document.getElementById('foodQty').value) || 1; if(!name) return;
@@ -973,7 +1105,6 @@ function onFoodAdd() {
   selectedFoods.push({ name: name, kcal: targetKcal, qty: qty }); drawFoods();
 }
 
-/* --- [요청 사항 반영] 직접 입력 음식 리스트 실시간 동적 갱신 모듈 플러그인 --- */
 function onCustomFoodAdd() {
   const nIn = document.getElementById('customFood'), kIn = document.getElementById('customKcal'), qIn = document.getElementById('customQty');
   const name = nIn.value.trim(), kcal = parseFloat(kIn.value), qty = parseFloat(qIn.value) || 1; if(!name || isNaN(kcal)) return;
@@ -999,63 +1130,44 @@ function removeFood(i) { selectedFoods.splice(i, 1); drawFoods(); }
 function updateStatus() {
   const intake = parseFloat(document.getElementById('sumKcal').innerText) || 0; const diff = tdeeVal - intake;
   document.getElementById('calStatus').value = Math.round(diff);
-  const cw = parseFloat(document.getElementById('w').value), tw = parseFloat(document.getElementById('tw').value);
+  const cw = parseFloat(document.getElementById('w').value), tw = parseFloat(document.getElementById('tw').value), h = parseFloat(document.getElementById('h').value);
   const goalBox = document.getElementById('goalSum'), summaryBox = document.getElementById('hello-summary'), pack = i18n[currentLang];
+  
   document.getElementById('t_totalIntakeBox').innerHTML = pack.totalIntake + `<span id="sumKcal" style="color:var(--accent); font-size:22px;">${Math.round(intake)}</span> kcal`;
-  if (!cw || !tw || !tdeeVal) { goalBox.innerHTML = `<span style='color: #e74c3c; font-weight: bold;'>${pack.msgFillAll}</span>`; summaryBox.innerText = pack.infoRequired; return; }
+  
+  if (!cw || !tw || !tdeeVal || !h) { 
+    goalBox.innerHTML = `<span style='color: #e74c3c; font-weight: bold;'>${pack.msgFillAll}</span>`; 
+    summaryBox.innerText = pack.infoRequired; 
+    return; 
+  }
+  
+  // BMI 22 기준 적정 체중 및 체중 조절 차이 계산
+  const idealWeight = (22 * Math.pow(h / 100, 2)).toFixed(1);
+  const weightDiff = (cw - idealWeight).toFixed(1);
+  const weightDiffText = weightDiff >= 0 ? `-${weightDiff}kg` : `+${Math.abs(weightDiff)}kg`;
+  
   const lose = (cw - tw).toFixed(1); const days = diff > 0 ? Math.round((lose * 7700) / diff) : 0;
+  
   let html = "";
   if(currentLang === "ko") {
-    html += `감량 목표: ${lose}kg<br>일일 소모 차이: ${Math.round(diff)}kcal<br>예상 달성 일수: ${days}일`;
+    html += `감량 목표: ${lose}kg (적정체중: ${idealWeight}kg, 체중조절: ${weightDiffText})<br>일일 소모 차이: ${Math.round(diff)}kcal<br>예상 달성 일수: ${days}일`;
     if (diff <= 0) html += `<br><span style="color: #e74c3c; font-weight: bold;">칼로리 차이를 플러스(+)로 만드세요.</span>`;
-  } else {
-    html += `Weight to Lose: ${lose}kg<br>Daily Calorie Deficit: ${Math.round(diff)}kcal<br>Estimated Days: ${days} Days`;
+  } else if(currentLang === "en") {
+    html += `Weight to Lose: ${lose}kg (Ideal: ${idealWeight}kg, Adjust: ${weightDiffText})<br>Daily Calorie Deficit: ${Math.round(diff)}kcal<br>Estimated Days: ${days} Days`;
     if (diff <= 0) html += `<br><span style="color: #e74c3c; font-weight: bold;">Make the calorie difference positive (+).</span>`;
+  } else if(currentLang === "jp") {
+    html += `減量目標: ${lose}kg (適正体重: ${idealWeight}kg, 体重調整: ${weightDiffText})<br>1日の消費差: ${Math.round(diff)}kcal<br>予想達成日数: ${days}日`;
+    if (diff <= 0) html += `<br><span style="color: #e74c3c; font-weight: bold;">カロリー差をプラス(+)にしてください。</span>`;
+  } else {
+    html += `减重目标: ${lose}kg (标准体重: ${idealWeight}kg, 体重调节: ${weightDiffText})<br>每日消耗差: ${Math.round(diff)}kcal<br>预计达成天数: ${days}天`;
+    if (diff <= 0) html += `<br><span style="color: #e74c3c; font-weight: bold;">请使卡路里差值为正(+)。</span>`;
   }
   goalBox.innerHTML = html;
+  
   if(currentLang === "ko") summaryBox.innerText = `목표:${lose}kg 감량, 예상:${days > 0 ? days + '일' : '-'} 🔥`;
   else if(currentLang === "en") summaryBox.innerText = `Goal:-${lose}kg, Est:${days > 0 ? days + ' days' : '-'} 🔥`;
   else if(currentLang === "jp") summaryBox.innerText = `目標:-${lose}kg, 予想:${days > 0 ? days + '日' : '-'} 🔥`;
   else summaryBox.innerText = `目标:-${lose}kg, 预计:${days > 0 ? days + '天' : '-'} 🔥`;
-}
-
-function saveCurrentMealLog() {
-  const dateStr = document.getElementById('uiDate').value; const timeStr = document.getElementById('mealTime').value;
-  const totalKcal = document.getElementById('sumKcal').innerText; if (selectedFoods.length === 0 || !dateStr) return;
-  const foodsSummary = selectedFoods.map(f => `${f.name}(x${f.qty})`).join(', ');
-  const logItem = { id: Date.now(), date: dateStr, time: timeStr, summary: foodsSummary, kcal: totalKcal };
-  savedMealLogs.unshift(logItem); localStorage.setItem('dietMealLogs', JSON.stringify(savedMealLogs));
-  selectedFoods = []; drawFoods(); renderTimelineLogs();
-  if(!document.getElementById('timelineSec').classList.contains('show')) toggleTimeline();
-}
-function loadMealLogs() { const stored = localStorage.getItem('dietMealLogs'); if (stored) savedMealLogs = JSON.parse(stored); renderTimelineLogs(); }
-function toggleTimeline() { document.getElementById('timelineSec').classList.toggle('show'); updateButtonLabels(); }
-function deleteMealLog(id) { savedMealLogs = savedMealLogs.filter(item => item.id !== id); localStorage.setItem('dietMealLogs', JSON.stringify(savedMealLogs)); renderTimelineLogs(); }
-
-function renderTimelineLogs() {
-  const box = document.getElementById('timelineLogs'), pack = i18n[currentLang];
-  if (savedMealLogs.length === 0) { box.innerHTML = `<div style="text-align: center; opacity: 0.5; padding: 20px 10px; font-size: 14px;">${pack.logPlaceholder}</div>`; return; }
-  let html = "";
-  savedMealLogs.forEach(log => {
-    html += `
-      <div class="log-card">
-        <div class="log-header">
-          <span>📅 ${log.date}</span>
-          <div class="log-header-right">
-            <span class="log-tag">${log.time}</span>
-            <button class="log-delete-icon-btn" onclick="deleteMealLog(${log.id})" title="Delete">
-              <svg viewBox="0 0 24 24">
-                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="log-content">${log.summary}</div>
-        <div class="log-kcal">❯ ${log.kcal} kcal</div>
-      </div>
-    `;
-  });
-  box.innerHTML = html;
 }
 
 function runMap() {
@@ -1068,15 +1180,64 @@ function runMap() {
   while (tempWeight > gw && list.length < 15) {
     let nextWeight = Math.max(gw, tempWeight - 1); let cumulativeDays = Math.round(((cw - nextWeight) * 7700) / st);
     let period = cumulativeDays - (list.length > 0 ? list[list.length-1].cumVal : 0);
-    let suffix = currentLang === "ko" ? "일" : (currentLang === "zh" ? "天" : " Days");
+    let suffix = currentLang === "ko" ? "일" : (currentLang === "zh" ? "天" : (currentLang === "jp" ? "日" : " Days"));
     list.push({ target: nextWeight.toFixed(1) + "kg", period: period + suffix, cumulative: cumulativeDays + suffix, cumVal: cumulativeDays }); tempWeight = nextWeight;
   }
-  let prefixText = currentLang === "ko" ? "총 예상 소요일: " : "Total Estimated Period: ";
+  
+  let prefixText = "";
+  if (currentLang === "ko") prefixText = "총 예상 소요일: ";
+  else if (currentLang === "jp") prefixText = "総予想所要日数: ";
+  else if (currentLang === "zh") prefixText = "总预计所需天数: ";
+  else prefixText = "Total Estimated Period: ";
+
   let h = `<b>${prefixText} ${list[list.length-1].cumulative}</b><br><table><tr><th>${pack.mapHeaders[0]}</th><th>${pack.mapHeaders[1]}</th><th>${pack.mapHeaders[2]}</th></tr>`;
   list.forEach(r => { h += `<tr><td>${r.target}</td><td>${r.period}</td><td>${r.cumulative}</td></tr>`; });
   box.innerHTML = h + "</table>";
 }
 function toggleMap() { const s = document.getElementById('mapSec'); s.classList.toggle('show'); updateButtonLabels(); if(s.classList.contains('show')) runMap(); }
+
+function moveKite() {
+  const kite = document.getElementById('flyingKite');
+  const area = document.getElementById('kiteArea');
+  if(!kite || !area) return;
+  
+  const containerW = area.clientWidth;
+  const containerH = area.clientHeight;
+  
+  // 방패연 크기와 안전 여백 설정 (크기 축소 반영)
+  const kiteW = 24;
+  const kiteH = 75; 
+  const padding = 10; 
+  
+  // 방패연이 컨테이너 밖으로 나가지 않도록 최대 좌표 계산
+  const maxLeft = Math.max(0, containerW - kiteW - padding);
+  const maxTop = Math.max(0, containerH - kiteH - padding);
+  
+  // 랜덤 위치 및 회전 계산
+  const randomLeft = padding + (Math.random() * (maxLeft - padding));
+  const randomTop = padding + (Math.random() * (maxTop - padding));
+  const randomRot = Math.floor(Math.random() * 30) - 15; 
+  const randomScale = 0.9 + (Math.random() * 0.2); // 0.9 ~ 1.1 크기 변화
+  
+  // 좌표 적용
+  kite.style.left = `${randomLeft}px`;
+  kite.style.top = `${randomTop}px`;
+  kite.style.transform = `rotate(${randomRot}deg) scale(${randomScale})`;
+}
+
+// 스크롤 이벤트 감지하여 탑 버튼 표시 여부 제어
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scrollTopBtn');
+  if (window.scrollY > 250) {
+    btn.classList.add('visible');
+  } else {
+    btn.classList.remove('visible');
+  }
+});
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 </script>
 </body>
 </html>
