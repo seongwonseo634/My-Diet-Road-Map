@@ -81,23 +81,18 @@
       position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
       pointer-events: none; z-index: 1; overflow: hidden; border-radius: 28px; 
     }
-    
     .kite-wrapper {
       position: absolute; width: 24px; height: 75px; 
       transition: left 4s ease-in-out, top 4s ease-in-out, transform 4s ease-in-out;
       display: flex; flex-direction: column; align-items: center;
       filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
     }
-
     .kite-body {
       width: 24px; height: 34px; background: white;
       border: 1.5px solid rgba(51, 65, 85, 0.8); border-radius: 2px;
       position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden;
     }
-
-    .kite-body::before, .kite-body::after, .kite-cross-1, .kite-cross-2 {
-      content: ''; position: absolute; background: rgba(120, 53, 15, 0.4);
-    }
+    .kite-body::before, .kite-body::after, .kite-cross-1, .kite-cross-2 { content: ''; position: absolute; background: rgba(120, 53, 15, 0.4); }
     .kite-body::before { width: 100%; height: 1px; top: 50%; }
     .kite-body::after { width: 1px; height: 100%; left: 50%; }
     .kite-cross-1 { width: 140%; height: 1px; transform: rotate(55deg); }
@@ -113,23 +108,9 @@
       border: 1px solid #334155; position: absolute; z-index: 20;
     }
 
-    @keyframes tailWiggle {
-      0% { transform: rotate(-20deg) skewX(-15deg); }
-      25% { transform: rotate(25deg) skewX(18deg); }
-      50% { transform: rotate(-28deg) skewX(-20deg); }
-      75% { transform: rotate(20deg) skewX(12deg); }
-      100% { transform: rotate(-20deg) skewX(-15deg); }
-    }
-    @keyframes pathWiggle1 {
-      0% { d: path("M 9,0 Q 18,15 2,30 T 14,60"); }
-      50% { d: path("M 9,0 Q 0,15 16,30 T 4,60"); }
-      100% { d: path("M 9,0 Q 18,15 2,30 T 14,60"); }
-    }
-    @keyframes pathWiggle2 {
-      0% { d: path("M 9,0 Q 0,15 16,30 T 4,60"); }
-      50% { d: path("M 9,0 Q 18,15 2,30 T 14,60"); }
-      100% { d: path("M 9,0 Q 0,15 16,30 T 4,60"); }
-    }
+    @keyframes tailWiggle { 0% { transform: rotate(-20deg) skewX(-15deg); } 25% { transform: rotate(25deg) skewX(18deg); } 50% { transform: rotate(-28deg) skewX(-20deg); } 75% { transform: rotate(20deg) skewX(12deg); } 100% { transform: rotate(-20deg) skewX(-15deg); } }
+    @keyframes pathWiggle1 { 0% { d: path("M 9,0 Q 18,15 2,30 T 14,60"); } 50% { d: path("M 9,0 Q 0,15 16,30 T 4,60"); } 100% { d: path("M 9,0 Q 18,15 2,30 T 14,60"); } }
+    @keyframes pathWiggle2 { 0% { d: path("M 9,0 Q 0,15 16,30 T 4,60"); } 50% { d: path("M 9,0 Q 18,15 2,30 T 14,60"); } 100% { d: path("M 9,0 Q 0,15 16,30 T 4,60"); } }
 
     .kite-tail-wrapper {
       transform-origin: top center; animation: tailWiggle 2.2s infinite ease-in-out;
@@ -150,11 +131,10 @@
       box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); 
       margin-bottom: 25px; position: relative; width: 100%; 
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      overflow: hidden; /* 그라데이션 선이 둥근 모서리에 맞게 잘리도록 설정 */
+      overflow: hidden; 
     }
     .card:hover { transform: translateY(-3px); box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); z-index: 10; }
     
-    /* 모든 카드에 상단 그라데이션 띠 추가 */
     .card::before {
       content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px;
       background: var(--card-line); z-index: 10;
@@ -164,6 +144,7 @@
       background: var(--card-line); color: white; border-radius: 14px; padding: 12px; 
       font-weight: bold; margin-bottom: 20px; text-align: center; font-size: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      display: flex; justify-content: center; align-items: center; gap: 6px;
     }
 
     .input-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 15px; }
@@ -177,15 +158,15 @@
       background: var(--bg); color: var(--text); box-shadow: var(--neu-inset); 
       font-size: 15px; outline: none; transition: 0.2s;
     }
-    #uiDate { cursor: pointer; }
+    #uiDate { cursor: pointer; padding-right: 40px; } /* 오른쪽 여백 확보 */
 
-    /* 버튼 위젯에도 그라데이션 라인 추가 */
+    /* 버튼 스타일 및 그라데이션 */
     .neu-btn { 
       width: 100%; padding: 18px; border: none; border-radius: 20px; 
       background: var(--bg); color: var(--accent); font-weight: bold; 
       box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light); 
       cursor: pointer; margin-bottom: 15px; transition: all 0.2s ease; font-size: 16px; 
-      position: relative; overflow: hidden;
+      position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; gap: 6px;
     }
     .neu-btn::before {
       content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
@@ -193,6 +174,27 @@
     }
     .neu-btn:active { box-shadow: var(--neu-inset); transform: translateY(2px); }
     .neu-btn.active { box-shadow: var(--neu-inset); color: #ff9500; }
+
+    /* 도움말(?) 아이콘 및 토스트 팝업 스타일 */
+    .help-icon {
+      display: inline-flex; justify-content: center; align-items: center;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(0, 0, 0, 0.2); color: white;
+      font-size: 13px; font-weight: 800; cursor: pointer;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+    }
+    body.dark .help-icon { background: rgba(255, 255, 255, 0.2); color: white; }
+    
+    .toast-msg {
+      position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
+      background: rgba(49, 52, 75, 0.95); color: white; padding: 14px 24px;
+      border-radius: 30px; font-size: 13px; font-weight: bold;
+      z-index: 10000; transition: bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1); text-align: center;
+      width: 90%; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      word-break: keep-all; line-height: 1.4; pointer-events: none; opacity: 0;
+    }
+    body.dark .toast-msg { background: rgba(255, 255, 255, 0.95); color: #1e222b; }
+    .toast-msg.show { bottom: 85px; opacity: 1; }
 
     .toggle-section { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
     .toggle-section.show { max-height: 2000px; padding: 5px 0; }
@@ -249,26 +251,6 @@
     }
     .scroll-top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
     .scroll-top-btn:active { transform: scale(0.92); }
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-font-size: 15px;
-text-align: center;
-background: linear-gradient(
-    180deg,
-    #34D399 0%,
-    #10B981 100%
-);
-color:#fff;
-font-weight:700;
-border:none;
-border-radius:18px;
-box-shadow:
-0 8px 20px rgba(16,185,129,.28);
-transition:.2s;
-transform:translateY(-2px);
-box-shadow:
-0 12px 26px rgba(16,185,129,.35);    
 </style>
 </head>
 <body>
@@ -320,11 +302,25 @@ box-shadow:
   </div>
 
   <div class="card" style="padding: 15px;">
-    <label class="label" id="t_uiDateLabel">📅 입력 날짜 선택</label>
-    <input type="text" id="uiDate" class="neu-input" readonly onclick="openCustomCalendar()">
+    <label class="label" id="t_uiDateLabel">입력 날짜 선택</label>
+    <div style="position: relative; width: 100%;">
+      <input type="text" id="uiDate" class="neu-input" readonly onclick="openCustomCalendar()">
+      <!-- 에메랄드 달력 이모지 (입력창 클릭 이벤트가 통과하도록 pointer-events: none 적용) -->
+      <div style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; align-items: center; justify-content: center;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+      </div>
+    </div>
   </div>
 
-  <div class="section-title" id="t_secTitle1">🔥 총대사량 산출</div>
+  <div class="section-title">
+    <span id="t_secTitle1">🔥 총대사량 산출</span>
+    <span class="help-icon" onclick="showToast('tdee')">?</span>
+  </div>
   <div class="card">
     <div class="input-grid">
       <div class="input-group"><label class="label" id="t_lblH">📏 키(cm)</label><input type="number" id="h" class="neu-input" placeholder="175"></div>
@@ -342,7 +338,10 @@ box-shadow:
     </div>
   </div>
 
-  <button id="tdeeBtn" class="neu-btn" onclick="toggleTDEE()">📊 총대사량 산출 보기</button>
+  <button class="neu-btn" onclick="toggleTDEE()">
+    <span id="tdeeBtnText">📊 총대사량 산출 보기</span>
+    <span class="help-icon" onclick="event.stopPropagation(); showToast('tdee_btn')">?</span>
+  </button>
   <div id="tdeeSec" class="toggle-section">
     <div class="card">
       <div id="tdeeRes" class="result-text">기본 정보를 입력하고 버튼을 눌러주세요.</div>
@@ -350,7 +349,10 @@ box-shadow:
   </div>
 
   <div class="card">
-    <div class="section-title" id="t_secTitle2" style="background:var(--accent-emerald);">🍽️ 하루 섭취 칼로리</div>
+    <div class="section-title" style="background:var(--accent-emerald);">
+      <span id="t_secTitle2">🍽️ 하루 섭취 칼로리</span>
+      <span class="help-icon" onclick="showToast('intake')">?</span>
+    </div>
     
     <div class="input-grid" style="margin-bottom: 20px;">
       <div class="input-group">
@@ -367,7 +369,7 @@ box-shadow:
       </div>
       <div style="display:flex; gap:10px;">
         <input type="text" id="searchInput" class="neu-input" placeholder="음식명 검색" onkeydown="if(event.key === 'Enter') execApiSearch()">
-        <button class="sm-btn" style="padding: 0 16px; border-radius: 14px; background-color: #34C759 !important; color: white !important; font-weight: bold;" id="t_searchBtn" onclick="execApiSearch()">🔍 검색</button>
+        <button class="sm-btn" style="padding: 0 16px; border-radius: 14px; background-color: #34C759 !important; color: white !important; font-weight: bold; white-space: nowrap;" id="t_searchBtn" onclick="execApiSearch()">검색</button>
       </div>
       <div class="search-results-list" id="searchResults">
         <div style="font-size:12px; opacity:0.5; padding:15px; text-align:center;" id="t_searchPlaceholder">검색어를 입력 후 검색 버튼을 누르시면 실시간 영양 정보가 노출됩니다.</div>
@@ -379,7 +381,7 @@ box-shadow:
       <div class="input-group" style="flex: 1;"><label class="label" id="t_lblCat">📁 음식항목 선택</label><select id="cat" class="neu-input" onchange="onCatSelect()"></select></div>
       <div class="input-group" style="flex: 1.2;"><label class="label" id="t_lblFood">🍱 음식명</label><select id="food" class="neu-input"></select></div>
       <div class="input-group" style="flex: 0.5;"><label class="label" id="t_lblQty1">🔢 수량(x)</label><input type="number" id="foodQty" class="neu-input" value="1" min="0.1" step="0.1"></div>
-      <button class="neu-btn" style="flex: 0.4; padding: 13px; margin: 0; font-size: 13px; height: 45px; border-radius: 14px; background-color: #34C759 !important; color: white !important; font-weight: bold; box-shadow: none;" id="t_addBtn1" onclick="onFoodAdd()">추가</button>
+      <button class="neu-btn" style="flex: 0.4; padding: 13px; margin: 0; font-size: 13px; height: 45px; border-radius: 14px; background-color: #34C759 !important; color: white !important; font-weight: bold; white-space: nowrap; box-shadow: none;" id="t_addBtn1" onclick="onFoodAdd()">추가</button>
     </div>
 
     <!-- 직접 입력 영역 -->
@@ -387,7 +389,7 @@ box-shadow:
       <div class="input-group" style="flex: 1.5;"><label class="label" id="t_lblCustomName">✏️ 직접입력</label><input type="text" id="customFood" class="neu-input" placeholder="음식명"></div>
       <div class="input-group"><label class="label" id="t_lblCustomKcal">⚡ 칼로리(kcal)</label><input type="number" id="customKcal" class="neu-input" placeholder="kcal"></div>
       <div class="input-group" style="flex: 0.5;"><label class="label" id="t_lblQty2">🔢 수량(x)</label><input type="number" id="customQty" class="neu-input" value="1" min="0.1" step="0.1"></div>
-      <button class="neu-btn" style="flex: 0.4; padding: 13px; margin: 0; font-size: 13px; height: 45px; border-radius: 14px; background-color: #34C759 !important; color: white !important; font-weight: bold; box-shadow: none;" id="t_addBtn2" onclick="onCustomFoodAdd()">추가</button>
+      <button class="neu-btn" style="flex: 0.4; padding: 13px; margin: 0; font-size: 13px; height: 45px; border-radius: 14px; background-color: #34C759 !important; color: white !important; font-weight: bold; white-space: nowrap; box-shadow: none;" id="t_addBtn2" onclick="onCustomFoodAdd()">추가</button>
     </div>
 
     <div id="foodList" style="margin-top: 20px;"></div>
@@ -398,7 +400,10 @@ box-shadow:
   </div>
 
   <div class="card">
-    <div class="section-title" id="t_secTitle3" style="background:#FF9500;">🎯 감량 목표 설정</div>
+    <div class="section-title" style="background:#FF9500;">
+      <span id="t_secTitle3">🎯 감량 목표 설정</span>
+      <span class="help-icon" onclick="showToast('goal')">?</span>
+    </div>
     <div class="input-grid" style="align-items: flex-end;">
       <div class="input-group"><label class="label" id="t_lblTargetW">🏆 목표 체중(Kg)</label><input type="number" id="tw" class="neu-input" placeholder="65" oninput="updateStatus()"></div>
       <div class="input-grid-group" style="display:flex; flex:1; gap:12px;">
@@ -408,7 +413,10 @@ box-shadow:
     <div id="goalSum" class="result-text" style="margin-top:10px; font-weight: 600;"></div>
   </div>
 
-  <button id="mapBtn" class="neu-btn" onclick="toggleMap()">🗺️ 나의 감량 로드맵 산출 보기</button>
+  <button class="neu-btn" onclick="toggleMap()">
+    <span id="mapBtnText">🗺️ 나의 감량 로드맵 산출 보기</span>
+    <span class="help-icon" onclick="event.stopPropagation(); showToast('map_btn')">?</span>
+  </button>
   <div style="font-size:11px; margin-bottom:20px; opacity:0.8; text-align:center;" id="t_mapTip">💡 위 버튼을 클릭하면 실시간 로드맵이 생성됩니다.</div> 
   <div id="mapSec" class="toggle-section">
     <div class="card">
@@ -437,15 +445,17 @@ box-shadow:
   </div>
 </div>
 
+<div id="toastMsg" class="toast-msg"></div>
+
 <script>
 const i18n = {
   ko: {
     mainGreet: "목표 달성까지 계속 함께합니다! 🍎", infoRequired: "나의 정보를 입력해주세요.",
-    uiDateLabel: "📅 입력 날짜 선택", secTitle1: "🔥 총대사량 산출", secTitle2: "🍽️ 하루 섭취 칼로리", secTitle3: "🎯 감량 목표 설정",
+    uiDateLabel: "입력 날짜 선택", secTitle1: "🔥 총대사량 산출", secTitle2: "🍽️ 하루 섭취 칼로리", secTitle3: "🎯 감량 목표 설정",
     lblH: "📏 키(cm)", lblW: "⚖️ 체중(kg)", lblA: "🎂 나이(세)", lblLvl: "🏃 활동수준", lblEx: "⏱️ 운동시간(분)",
     tdeeBtnShow: "📊 총대사량 산출 보기", tdeeBtnHide: "🔚 총대사량 산출 닫기", tdeePlaceholder: "기본 정보를 입력하고 버튼을 눌러주세요.",
-    mealTimeLabel: "⏰ 식사 시점 분류", apiTag: "🌐 API 웰니스 데이터베이스 검색 및 즉시 입력", clearBtn: "🗑️ 지우기", searchBtn: "🔍 검색",
-    searchPlaceholder: "음식명 검색 (예: 신라면, 햇반, 요거트)", searchDefaultMsg: "검색어를 입력 후 검색 버튼을 누르면 영양정보가 노출됩니다.",
+    mealTimeLabel: "⏰ 식사 시점 분류", apiTag: "🌐 API 웰니스 데이터베이스 검색 및 즉시 입력", clearBtn: "🗑️ 지우기", searchBtn: "검색",
+    searchPlaceholder: "음식명 검색 (예: 신라면, 햇반, 요거트)", searchDefaultMsg: "검색어를 입력 후 검색 버튼을 누르시면 실시간 영양 정보가 노출됩니다.",
     lblCat: "📁 음식항목 선택", lblFood: "🍱 음식명", lblQty: "🔢 수량(x)", addBtn: "추가", lblCustomName: "✏️ 직접입력", lblCustomKcal: "⚡ 칼로리(kcal)",
     phCustomFoodName: "음식명",
     totalIntake: "총 섭취: ", lblTargetW: "🏆 목표 체중(Kg)", lblCalStatus: "⚖️ 칼로리차이(총운동대사량-섭취칼로리)",
@@ -455,14 +465,16 @@ const i18n = {
     mealTimes: ["🌅 아침 식사", "☀️ 점심 식사", "🌙 저녁 식사", "🍰 간식/기타"],
     activityLevels: ["거의 없음 (앉아서 생활)", "가벼운 활동 (주 1~3회)", "가벼운 활동 (주 3~5회)", "중고강도활동 (주 1~3회)", "중고강도활동 (주 4~5회)", "고강도활동 (주 1~3회)", "고강도활동 (주 4~5회)"],
     mapHeaders: ["목표", "소요", "누적"], servingText: "기준", selectText: "✔️ 선택", directAddText: "⚡ 바로 추가", timesText: "배",
-    calWeeks: ["일", "월", "화", "수", "목", "금", "토"], calYearSuffix: "년 ", calMonthSuffix: "월", calToday: "📅 오늘", calClear: "🗑️ 삭제"
+    calWeeks: ["일", "월", "화", "수", "목", "금", "토"], calYearSuffix: "년 ", calMonthSuffix: "월", calToday: "📅 오늘", calClear: "🗑️ 삭제",
+    toastTdee: "기초대사량과 활동대사량을 합산한 하루 총 에너지 소모량입니다.", toastTdeeBtn: "입력한 신체 정보를 바탕으로 총대사량을 계산합니다.",
+    toastIntake: "오늘 하루 동안 섭취한 모든 음식의 칼로리 합계입니다.", toastGoal: "목표 체중을 설정하고 현재 상태를 확인합니다.", toastMapBtn: "목표 체중까지의 감량 일정과 예상 기간을 보여줍니다."
   },
   en: {
     mainGreet: "With you all the way to your goal! 🍎", infoRequired: "Please enter your information.",
-    uiDateLabel: "📅 Select Entry Date", secTitle1: "🔥 Total Daily Energy Expenditure (TDEE)", secTitle2: "🍽️ Daily Calorie Intake", secTitle3: "🎯 Weight Loss Goal Setting",
+    uiDateLabel: "Select Entry Date", secTitle1: "🔥 Total Daily Energy Expenditure (TDEE)", secTitle2: "🍽️ Daily Calorie Intake", secTitle3: "🎯 Weight Loss Goal Setting",
     lblH: "📏 Height(cm)", lblW: "⚖️ Weight(kg)", lblA: "🎂 Age(yrs)", lblLvl: "🏃 Activity Level", lblEx: "⏱️ Exercise(min)",
     tdeeBtnShow: "📊 View TDEE Analysis", tdeeBtnHide: "🔚 Close TDEE Analysis", tdeePlaceholder: "Enter your basic info and click the button.",
-    mealTimeLabel: "⏰ Meal Time Category", apiTag: "🌐 API Wellness Global Food DB Real-time Search", clearBtn: "🗑️ Clear", searchBtn: "🔍 Search",
+    mealTimeLabel: "⏰ Meal Time Category", apiTag: "🌐 API Wellness Global Food DB Real-time Search", clearBtn: "🗑️ Clear", searchBtn: "Search",
     searchPlaceholder: "Search food name (e.g., Chicken, Salad, Bread)", searchDefaultMsg: "Enter keywords and click search to view real-time nutritional facts.",
     lblCat: "📁 Select Category", lblFood: "🍱 Food Name", lblQty: "🔢 Qty(x)", addBtn: "Add", lblCustomName: "✏️ Manual Entry", lblCustomKcal: "⚡ Calories (kcal)",
     phCustomFoodName: "Food Name",
@@ -473,14 +485,16 @@ const i18n = {
     mealTimes: ["🌅 Breakfast", "☀️ Lunch", "🌙 Dinner", "🍰 Snack/Other"],
     activityLevels: ["Sedentary (Little/no exercise)", "Lightly Active (1-3 days/wk)", "Moderately Active (3-5 days/wk)", "Active (1-3 days/wk)", "Very Active (4-5 days/wk)", "Extremely Active (1-3 days/wk)", "Super Active (4-5 days/wk)"],
     mapHeaders: ["Target", "Period", "Cumulative"], servingText: "Serving", selectText: "✔️ Select", directAddText: "⚡ Quick Add", timesText: "x",
-    calWeeks: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], calYearSuffix: " ", calMonthSuffix: "", calToday: "📅 Today", calClear: "🗑️ Clear"
+    calWeeks: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], calYearSuffix: " ", calMonthSuffix: "", calToday: "📅 Today", calClear: "🗑️ Clear",
+    toastTdee: "Total daily energy expenditure combining BMR and activity.", toastTdeeBtn: "Calculates TDEE based on entered body info.",
+    toastIntake: "Total calories of all food consumed today.", toastGoal: "Set target weight and check current status.", toastMapBtn: "Shows the weight loss schedule and estimated time to reach the target."
   },
   jp: {
     mainGreet: "目標達成までずっと一緒にサポートします！ 🍎", infoRequired: "プロフィール情報を入力してください。",
-    uiDateLabel: "📅 入力日付の選択", secTitle1: "🔥 総代謝量（TDEE）の算出", secTitle2: "🍽️ 本日の摂取カロリー", secTitle3: "🎯 減量目標の設定",
+    uiDateLabel: "入力日付の選択", secTitle1: "🔥 総代謝量（TDEE）の算出", secTitle2: "🍽️ 本日の摂取カロリー", secTitle3: "🎯 減量目標の設定",
     lblH: "📏 身長(cm)", lblW: "⚖️ 体重(kg)", lblA: "🎂 年齢(歳)", lblLvl: "🏃 活動レベル", lblEx: "⏱️ 運動時間(分)",
     tdeeBtnShow: "📊 総代謝量を見る", tdeeBtnHide: "🔚 総代謝量算出を閉じる", tdeePlaceholder: "基本情報を入力してボタンを押してください。",
-    mealTimeLabel: "⏰ 食事時間帯の分類", apiTag: "🌐 API ウェルネス食品データベース リアルタイム検索", clearBtn: "🗑️ クリア", searchBtn: "🔍 検索",
+    mealTimeLabel: "⏰ 食事時間帯の分類", apiTag: "🌐 API ウェルネス食品データベース リアルタイム検索", clearBtn: "🗑️ クリア", searchBtn: "検索",
     searchPlaceholder: "食品名を入力 (例: ステーキ, サラダ, 食パン)", searchDefaultMsg: "検索語を入力して検索ボタンを押すと、リアルタイムで栄養情報が表示されます。",
     lblCat: "📁 カテゴリ選択", lblFood: "🍱 食品名", lblQty: "🔢 数量(x)", addBtn: "追加", lblCustomName: "✏️ 直接入力", lblCustomKcal: "⚡ カロリー(kcal)",
     phCustomFoodName: "食品名",
@@ -491,14 +505,16 @@ const i18n = {
     mealTimes: ["🌅 朝食", "☀️ 昼食", "🌙 夕食", "🍰 間食/その他"],
     activityLevels: ["ほぼなし (デスクワーク中心)", "軽い活動 (週1~3回)", "軽い活動 (週3~5回)", "中高強度の活動 (週1~3回)", "中高強度の活動 (週4~5回)", "高強度の活動 (週1~3回)", "高強度の活動 (週4~5回)"],
     mapHeaders: ["目標", "期間", "累積"], servingText: "基準", selectText: "✔️ 選択", directAddText: "⚡ すぐ追加", timesText: "倍",
-    calWeeks: ["日", "月", "火", "水", "木", "金", "土"], calYearSuffix: "年 ", calMonthSuffix: "月", calToday: "📅 今日", calClear: "🗑️ 削除"
+    calWeeks: ["日", "月", "火", "水", "木", "金", "土"], calYearSuffix: "年 ", calMonthSuffix: "月", calToday: "📅 今日", calClear: "🗑️ 削除",
+    toastTdee: "基礎代謝量と活動代謝量を合算した1日の総消費エネルギーです。", toastTdeeBtn: "入力された身体情報をもとに総代謝量を計算します。",
+    toastIntake: "今日一日に摂取したすべての食べ物のカロリー合計です。", toastGoal: "目標体重を設定し、現在の状態を確認します。", toastMapBtn: "目標体重までの減量スケジュールと予想期間を表示します。"
   },
   zh: {
     mainGreet: "一路陪伴您达成减重目标！ 🍎", infoRequired: "请输入您的基本信息。",
-    uiDateLabel: "📅 选择记录日期", secTitle1: "🔥 总日能量消耗 (TDEE) 计算", secTitle2: "🍽️ 今日卡路里摄入", secTitle3: "🎯 设定减重目标",
+    uiDateLabel: "选择记录日期", secTitle1: "🔥 总日能量消耗 (TDEE) 计算", secTitle2: "🍽️ 今日卡路里摄入", secTitle3: "🎯 设定减重目标",
     lblH: "📏 身高(cm)", lblW: "⚖️ 体重(kg)", lblA: "🎂 年龄(岁)", lblLvl: "🏃 日常活动量", lblEx: "⏱️ 运动时长(分)",
     tdeeBtnShow: "📊 计算总代谢量", tdeeBtnHide: "🔚 关闭总代谢量", tdeePlaceholder: "请输入基本信息并点击按钮。",
-    mealTimeLabel: "⏰ 用餐时间分类", apiTag: "🌐 API Wellness 全球食品数据库实时查询", clearBtn: "🗑️ 清除", searchBtn: "🔍 搜索",
+    mealTimeLabel: "⏰ 用餐时间分类", apiTag: "🌐 API Wellness 全球食品数据库实时查询", clearBtn: "🗑️ 清除", searchBtn: "搜索",
     searchPlaceholder: "输入食品名称 (如: 米饭, 饺子, 炒菜)", searchDefaultMsg: "输入关键词并点击搜索以查看实时营养成分。",
     lblCat: "📁 选择类别", lblFood: "🍱 食品名称", lblQty: "🔢 数量(x)", addBtn: "添加", lblCustomName: "✏️ 手动输入", lblCustomKcal: "⚡ 卡路里(kcal)",
     phCustomFoodName: "食品名称",
@@ -509,21 +525,197 @@ const i18n = {
     mealTimes: ["🌅 早餐", "☀️ 午餐", "🌙 晚餐", "🍰 零食/其他"],
     activityLevels: ["几乎没有（久坐不动）", "轻度活动（每周1~3次）", "轻度活动（每周3~5次）", "中高强度活动（每周1~3次）", "中高强度活动（每周4~5次）", "高强度活动（每周1~3次）", "高强度活动（每周4~5次）"],
     mapHeaders: ["目标", "所需时间", "累计"], servingText: "每", selectText: "✔️ 选择", directAddText: "⚡ 直接添加", timesText: "倍",
-    calWeeks: ["日", "一", "二", "三", "四", "五", "六"], calYearSuffix: "年 ", calMonthSuffix: "月", calToday: "📅 今天", calClear: "🗑️ 清除"
+    calWeeks: ["日", "一", "二", "三", "四", "五", "六"], calYearSuffix: "年 ", calMonthSuffix: "月", calToday: "📅 今天", calClear: "🗑️ 清除",
+    toastTdee: "包含基础代谢和活动量的每日总消耗卡路里。", toastTdeeBtn: "根据输入的身体信息计算总消耗量。",
+    toastIntake: "今天一天摄入的食物总卡路里。", toastGoal: "设定目标体重并检查当前状态。", toastMapBtn: "显示减重计划和预计到达目标的时间。"
   }
 };
 
 const foodDbMaster = {
-  ko: { "밥/죽": {"흰쌀밥1공기(210g)": 300, "현미밥1공기(210g)": 300}, "과일/간식": {"사과1개": 140, "바나나1개": 90} },
-  en: { "Rice/Grains": {"White Rice (1 bowl, 210g)": 300, "Brown Rice (1 bowl, 210g)": 300}, "Fruits/Snacks": {"Apple (1 medium)": 95, "Banana (1 medium)": 105} },
-  jp: { "主食(ご飯・お粥)": {"白ご飯(1杯 150g)": 240, "玄米ご飯(1杯 150g)": 230}, "果物・菓子": {"りんご(半分)": 60, "バナナ(1本)": 85} },
-  zh: { "主食(米饭/粥)": {"白米饭(1碗 150g)": 230, "糙米饭(1碗)": 220}, "水果/零食": {"苹果(1个)": 95, "香蕉(1根)": 105} }
+  ko: {
+    "밥/죽": {
+      "흰쌀밥1공기(210g)": 300, "현미밥1공기(210g)": 300, "흑미밥1공기(210g)": 270, "보리밥1공기(210g)": 300, 
+      "잡곡밥1공기(210g)": 300, "햇반1개(210g)": 315, "돌솥비빔밥1인분": 650, "소고기비빔밥1인분": 600, 
+      "나물비빔밥1인분": 400, "볶음밥1인분": 600, "김밥1줄(250g)": 450, "삼각김밥1개": 250, 
+      "국밥1인분": 700, "주먹밥1개": 200, "초밥1개": 50, "짬뽕밥1인분": 550, 
+      "짜장밥1인분": 550, "잡채밥1인분": 700, "곤드레밥1인분": 400, "계란덮밥1인분": 500, 
+      "콘프로스트1인분(30g)": 116, "누룽지한그릇": 750, "야채죽1인분(300g)": 300, "호박죽1인분(350g)": 400, 
+      "쌀죽1인분(300g)": 200, "양송이수프1인분(200g)": 200
+    },
+    "국/찌개": {
+      "김치찌개1대접(400g)": 250, "된장찌개1대접(400g)": 200, "소고기무국1대접(300g)": 110, "미역국1대접(300g)": 120, 
+      "콩나물국1대접(300g)": 50, "청국장찌개1대접(400g)": 280, "육개장1대접(500g)": 340, "동태국1대접(400g)": 200, 
+      "선짓국1대접(600g)": 300, "설렁탕1대접(500g)": 250, "삼계탕1인분(800g)": 700, "북어국1인분(400g)": 152, 
+      "어묵국1인분(200g)": 72, "순대국1대접(400g)": 450, "곰탕1대접(600g)": 450, "갈비탕1대접(500g)": 500
+    },
+    "김치/나물류": {
+      "배추김치1접시(60g)": 25, "깍두기1접시(60g)": 30, "열무김치1접시(60g)": 20, "섞박지1접시(100g)": 40, 
+      "총각김치1접시(100g)": 30, "깻잎1접시(100g)": 50, "도라지1접시(100g)": 50, "시금치1접시(100g)": 23, 
+      "시래기1접시(100g)": 30, "숙주나물1접시(100g)": 15, "콩나물무침1접시(100g)": 35
+    },
+    "조림/볶음/젓갈류": {
+      "달걀조림(60g)": 80, "장조림(100g)": 170, "멸치조림(100g)": 130, "콩자반(100g)": 200, 
+      "고추조림(100g)": 70, "고등어조림(100g)": 150, "감자조림(100g)": 130, "두부조림(150g)": 150, 
+      "갈치조림(100g)": 120, "김치볶음(100g)": 50, "꽈리고추볶음(100g)": 120, "낙지볶음1인분(300g)": 300, 
+      "제육볶음1인분(200g)": 350, "떡볶이1인분(200g)": 300, "닭볶음(200g)": 550, "잡채(200g)": 300, 
+      "오징어볶음(200g)": 300, "어묵볶음(110g)": 130, "오징어젓(100g)": 180, "낙지젓(100g)": 180, 
+      "명란젓(100g)": 125
+    },
+    "구이/튀김/전": {
+      "고등어구이1토막(100g)": 300, "조기구이1마리(80g)": 130, "갈치구이1토막(100g)": 150, "불고기1인분(150g)": 250, 
+      "삼겹살1인분(200g)": 650, "꽁치구이(200)": 500, "굴비구이(100g)": 160, "돼지불고기(100g)": 200, 
+      "돼지갈비(100g)": 350, "황태구이1인분(200g)": 500, "청어구이(100g)": 200, "장어구이1마리(400g)": 700, 
+      "오리고기(100g)": 300, "스테이크1인분(200g)": 500, "곱창구이(200g)": 500, "오징어튀김1개(30g)": 30, 
+      "감자튀김1인분(100g)": 300, "돈까스(200g)": 650, "치킨1인분(250g)": 700, "탕수육1인분(300g)": 600, 
+      "달걀후라이1개": 100, "빈대떡1장(300g)": 500, "김치전1장(130g)": 300, "두부전(100g)": 80, 
+      "동태전(100g)": 195, "부추전1장(250g)": 400, "해물파전 1장(300g)": 600
+    },
+    "면/빵": {
+      "냉면1인분(600g)": 600, "만두1인분(300g)": 400, "국수1인분(600g)": 650, "떡만두국1인분(500g)": 500, 
+      "막국수1인분(500g)": 500, "수제비1인분(600g)": 400, "라면1봉지": 500, "짜장면1인분(800g)": 850, 
+      "짬뽕1인분(800g)": 700, "쫄면1인분(200g)": 400, "우동1인분(300g)": 400, "칼국수1인분(600g)": 800, 
+      "도넛1개(90g)": 300, "샌드위치1개(200g)": 400, "호떡1개(100g)": 250, "바게트1개(250g)": 700, 
+      "핫도그1개(100g)": 340, "식빵1조각(35g)": 90, "시루떡1개(200g)": 220, "가래떡1개(120g)": 230, 
+      "인절미1접시(100g)": 200, "붕어빵1개(50g)": 120, "햄버거1개(200g)": 500, "단팥빵1개(100g)": 270, 
+      "크림빵1개(80g)": 300, "소보로빵1개(85g)": 300, "토스트1장(35g)": 200, "케이크1조각(100g)": 400, 
+      "카스텔라1개(20g)": 80
+    },
+    "과일/간식": {
+      "사과1개(대과)": 140, "바나나1개": 90, "방울토마토15알(200g)": 30, "배1개(500g)": 300, 
+      "감1개(200g)": 100, "복숭아1개(250)": 100, "참외1개(250g)": 100, "포도1송이(400g)": 200, 
+      "밤5개(100g)": 150, "귤1개(80g)": 40, "견과류1봉(25g)": 150, "새우깡1봉(90g)": 465, 
+      "초코파이1개(35g)": 170, "오징어땅콩1봉지(200g)": 496, "가나초콜릿(70g)": 390, "페레로로쉐1개(12.5g)": 75, 
+      "홈런볼1봉지(40g)": 240, "꼬깔콘1봉지(72g)": 385, "프링글스1캔(53g)": 277, "빼빼로1갑": 250, 
+      "포카칩1봉지(66g)": 377
+    },
+    "주류/음료/유제품": {
+      "소주1병(360ml)": 400, "맥주500ml": 200, "막걸리1병(750ml)": 350, "와인(레드)1잔(150ml)": 120, 
+      "아메리카노1잔(300ml)": 10, "믹스커피1스틱(12g)": 50, "카페모카1잔": 350, "카페라테1잔": 150, 
+      "우유1팩(200ml)": 130, "콜라/사이다1캔(250ml)": 110, "오렌지주스1컵(200ml)": 100, "미숫가루(100g)": 350, 
+      "팥빙수1인분": 500, "아이스크림1개": 250
+    }
+  },
+  en: {
+    "Rice/Grains": {
+      "White Rice (1 bowl, 210g)": 300, "Brown Rice (1 bowl, 210g)": 300, "Oatmeal (1 bowl, 230g)": 150,
+      "Quinoa (1 cup, 185g)": 222, "Cereal with Milk (1 bowl)": 210, "Chicken Fried Rice (1 serving)": 550,
+      "Shrimp Fried Rice (1 serving)": 500, "Beef Rice Bowl (1 serving)": 650, "Poke Bowl (1 bowl)": 480,
+      "Mushroom Risotto (1 plate)": 400
+    },
+    "Soups/Stews": {
+      "Chicken Noodle Soup (1 bowl)": 150, "Tomato Soup (1 bowl)": 120, "Clam Chowder (1 bowl)": 250,
+      "Beef Stew (1 bowl)": 320, "Miso Soup (1 bowl)": 40, "Pumpkin Soup (1 serving)": 130,
+      "Lentil Soup (1 bowl)": 180, "French Onion Soup (1 bowl)": 200
+    },
+    "Salads/Sides": {
+      "Caesar Salad (1 plate)": 180, "Greek Salad (1 plate)": 150, "Garden Salad with Vinaigrette (1 plate)": 100,
+      "Cobb Salad (1 plate)": 350, "Mashed Potatoes (150g)": 120, "Coleslaw (1 cup, 120g)": 150,
+      "Kimchi (1 small plate, 60g)": 25, "Pickled Cucumbers (50g)": 15, "Steamed Broccoli (100g)": 35
+    },
+    "Main Dishes/Proteins": {
+      "Grilled Chicken Breast (150g)": 165, "Sirloin Steak (200g)": 400, "Salmon Fillet (150g)": 310,
+      "Scrambled Eggs (2 eggs)": 140, "Roasted Turkey (150g)": 220, "Baked Tofu (150g)": 120,
+      "Grilled Shrimp (10 pcs)": 120, "Pork Chop (150g)": 290, "Beef Meatballs (5 pcs)": 250
+    },
+    "Grilled/Fried": {
+      "French Fries (Medium)": 365, "Fried Chicken (1 leg)": 250, "BBQ Pork Ribs (200g)": 480,
+      "Battered Onion Rings (10 pcs)": 350, "Fish and Chips (1 plate)": 650, "Fried Egg (1 pc)": 100,
+      "Chicken Nuggets (6 pcs)": 280, "Hash Brown (1 pc)": 150, "Fried Calamari (1 plate)": 380
+    },
+    "Noodles/Bread": {
+      "Spaghetti Bolognese (1 plate)": 450, "Mac and Cheese (1 cup)": 380, "White Bread (1 slice)": 80,
+      "Whole Wheat Bread (1 slice)": 70, "Croissant (1 pc)": 270, "Bagel (1 pc)": 290,
+      "Turkey Sandwich (1 pc)": 350, "Cheese Burger (1 pc)": 450, "Pepperoni Pizza (1 slice)": 290,
+      "Pancakes (2 pcs with syrup)": 320, "Waffle (1 pc)": 220
+    },
+    "Fruits/Snacks": {
+      "Apple (1 medium)": 95, "Banana (1 medium)": 105, "Blueberries (1 cup, 150g)": 85,
+      "Strawberry (10 pcs)": 40, "Greek Yogurt (150g)": 120, "Chocolate Chip Cookie (1 pc)": 150,
+      "Potato Chips (1 bag, 50g)": 260, "Mixed Nuts (30g)": 170, "Dark Chocolate (50g)": 275,
+      "Popcorn (1 bag, 100g)": 380
+    },
+    "Drinks/Beverages": {
+      "Black Coffee (5kcal)": 5, "Cafe Latte (120kcal)": 120, "Cappuccino (100kcal)": 100,
+      "Coca-Cola (1 can)": 140, "Orange Juice (1 glass)": 110, "Beer (1 pint)": 210,
+      "Red Wine (1 glass, 150ml)": 125, "Green Tea (Unsweetened)": 0, "Protein Shake (180kcal)": 180,
+      "Whole Milk (200ml)": 130
+    }
+  },
+  jp: {
+    "主食(ご飯・お粥)": {
+      "白ご飯(1杯 150g)": 240, "玄米ご飯(1杯 150g)": 230, "赤飯(1杯)": 290, "麦ご飯(1杯)": 230,
+      "お粥(1杯)": 90, "チャーハン(1人前)": 600, "オムライス": 700, "牛丼(1人前)": 680,
+      "親子丼": 550, "寿司(かんたん8貫)": 480
+    },
+    "スープ・汁物": {
+      "味噌汁(わかめ)": 40, "豚汁(1杯)": 130, "お吸い物": 15, "コーンスープ": 120,
+      "コンソメスープ": 30, "けんちん汁": 80
+    },
+    "サラダ・小鉢": {
+      "キャベツサラダ": 25, "ポテトサラダ(1皿)": 180, "海藻サラダ": 35, "冷奴(1丁)": 80,
+      "ほうれん草お浸し": 25, "きんぴらごぼう": 65, "たくあん(3枚)": 10, "納豆(1パック)": 90
+    },
+    "主菜(大肉・高タンパク)": {
+      "鶏むね肉焼き(100g)": 145, "焼き鮭(1切)": 160, "刺身盛り合わせ": 180, "茹で卵(1個)": 80,
+      "豚の生姜焼き": 380, "豆腐ハンバーグ": 210, "サバの塩焼き": 290, "ステーキ(150g)": 350
+    },
+    "揚げ物・焼き物": {
+      "鶏の唐揚げ(3個)": 240, "とんかつ(120g)": 500, "天ぷら盛り合わせ": 420, "コロッケ(1個)": 160,
+      "エビフライ(2本)": 150, "目玉焼き(1個)": 95, "たこ焼き(6個)": 220, "お好み焼き(1枚)": 450
+    },
+    "麺類・パン": {
+      "うどん(1人前)": 320, "蕎麦(1人前)": 290, "ラーメン(醤油)": 450, "パスタ(ミートソース)": 600,
+      "食パン(1枚)": 160, "クロワッパン": 210, "サンドイッチ": 320, "カレーパン": 360
+    },
+    "果物・菓子": {
+      "りんご(半分)": 60, "バナナ(1本)": 85, "みかん(1個)": 35, "ヨーグルト(無糖100g)": 60,
+      "大福(1個)": 235, "せんべい(2枚)": 75, "ポテトチップス(半袋)": 270, "チョコレート(30g)": 170
+    },
+    "飲料・乳製品": {
+      "ブラックコーヒー": 5, "カフェラテ": 110, "緑茶(無糖)": 0, "牛乳(200ml)": 130,
+      "コーラ(1缶)": 140, "ビール(350ml)": 140, "日本酒(1合)": 190, "プロテインシェイク": 160
+    }
+  },
+  zh: {
+    "主食(米饭/粥)": {
+      "白米饭(1碗 150g)": 230, "糙米饭(1碗)": 220, "燕麦粥(1碗)": 130, "小米粥(1碗)": 110,
+      "蛋炒饭(1盘)": 550, "盖赞饭/卤肉饭": 680, "八宝粥(1罐)": 260, "素包子(1个)": 180,
+      "肉包子(1个)": 250, "馒头(1个 100g)": 220
+    },
+    "汤羹/炖菜": {
+      "西红柿鸡蛋汤": 110, "紫菜蛋花汤": 45, "酸辣汤": 160, "排骨海带汤": 220,
+      "鸡汤(1碗)": 150, "豆腐脑/豆腐花": 80
+    },
+    "凉菜/副食": {
+      "拍黄瓜(1盘)": 45, "凉拌木耳": 60, "皮蛋豆腐": 120, "凉拌海带丝": 75,
+      "韩式泡菜(60g)": 25, "白灼生菜": 50, "炒青菜(1盘)": 120
+    },
+    "主菜/蛋白质": {
+      "水煮鸡胸肉(100g)": 120, "清蒸鱼(150g)": 150, "白灼虾(10只)": 90, "香煎豆腐": 140,
+      "水煮蛋(1个)": 80, "炒牛肉(150g)": 260, "红烧肉(3块)": 350, "宫保鸡丁": 400
+    },
+    "炒菜/油炸": {
+      "炸薯条(中)": 365, "炸鸡腿(1个)": 250, "红烧排骨(200g)": 450, "锅包肉(1盘)": 580,
+      "煎荷包蛋(1个)": 110, "地三鲜": 320, "麻婆豆腐": 280, "西红柿炒鸡蛋": 190
+    },
+    "面食/面包": {
+      "炸酱面(1碗)": 580, "汤面/打卤面": 420, "方便面(1袋)": 480, "切片白面包(1片)": 80,
+      "全麦面包(1片)": 70, "三明治": 350, "牛角包": 270, "小笼包(5个)": 300, "水饺(10个)": 420
+    },
+    "水果/零食": {
+      "苹果(1个)": 95, "香蕉(1根)": 105, "草莓(10颗)": 40, "酸奶(100g)": 90,
+      "坚果(25g)": 150, "薯片(50g)": 260, "饼干(3片)": 150, "黑巧克力(30g)": 165
+    },
+    "酒水/饮品": {
+      "黑咖啡": 5, "拿铁咖啡": 120, "红茶/绿茶(无糖)": 0, "纯牛奶(250ml)": 150,
+      "可乐(1罐)": 140, "啤酒(1瓶)": 240, "红酒(1杯)": 120, "蛋白粉奶昔": 170
+    }
+  }
 };
 
 let currentLang = "ko"; 
 let selectedFoods = []; 
 let tdeeVal = 0;
-
 let calSelectedDate = new Date();
 let calCurrentYear = calSelectedDate.getFullYear();
 let calCurrentMonth = calSelectedDate.getMonth();
@@ -533,9 +725,7 @@ window.onload = () => {
   changeMode(savedTheme);
   setCalDateInputValue(calSelectedDate);
   changeLanguage("ko");
-
-  moveKite();
-  setInterval(moveKite, 3000);
+  moveKite(); setInterval(moveKite, 3000);
 };
 
 function changeLanguage(lang) {
@@ -578,80 +768,50 @@ function changeLanguage(lang) {
   setCalDateInputValue(calSelectedDate);
   updateButtonLabels();
   
-  const lvlSel = document.getElementById('lvl');
-  const savedLvl = lvlSel.value || "3";
-  lvlSel.innerHTML = "";
+  const lvlSel = document.getElementById('lvl'); const savedLvl = lvlSel.value || "3"; lvlSel.innerHTML = "";
   pack.activityLevels.forEach((text, index) => {
     let opt = document.createElement('option'); opt.value = (index + 1).toString(); opt.innerText = text;
-    if(opt.value === savedLvl) opt.selected = true;
-    lvlSel.appendChild(opt);
+    if(opt.value === savedLvl) opt.selected = true; lvlSel.appendChild(opt);
   });
   
-  const mtSel = document.getElementById('mealTime');
-  const savedMt = mtSel.value || pack.mealTimes[0]; 
-  mtSel.innerHTML = "";
+  const mtSel = document.getElementById('mealTime'); const savedMt = mtSel.value || pack.mealTimes[0]; mtSel.innerHTML = "";
   pack.mealTimes.forEach((text) => {
     let opt = document.createElement('option'); opt.value = text; opt.innerText = text;
-    if(text.includes(savedMt.slice(2))) opt.selected = true;
-    mtSel.appendChild(opt);
+    if(text.includes(savedMt.slice(2))) opt.selected = true; mtSel.appendChild(opt);
   });
   
-  initCategories();
-  updateStatus();
+  initCategories(); updateStatus();
   if(document.getElementById('tdeeSec').classList.contains('show')) runTDEE();
   if(document.getElementById('mapSec').classList.contains('show')) runMap();
 }
 
 function updateButtonLabels() {
   const pack = i18n[currentLang];
-  document.getElementById('tdeeBtn').innerText = document.getElementById('tdeeSec').classList.contains('show') ? pack.tdeeBtnHide : pack.tdeeBtnShow;
-  document.getElementById('mapBtn').innerText = document.getElementById('mapSec').classList.contains('show') ? pack.mapBtnHide : pack.mapBtnShow;
+  document.getElementById('tdeeBtnText').innerText = document.getElementById('tdeeSec').classList.contains('show') ? pack.tdeeBtnHide : pack.tdeeBtnShow;
+  document.getElementById('mapBtnText').innerText = document.getElementById('mapSec').classList.contains('show') ? pack.mapBtnHide : pack.mapBtnShow;
 }
 
-function getCustomDbFromStorage() {
-  const data = localStorage.getItem('localCustomFoodDb_' + currentLang);
-  return data ? JSON.parse(data) : {};
-}
-
-function saveCustomDbToStorage(name, kcal) {
-  let currentDb = getCustomDbFromStorage();
-  currentDb[name] = Math.round(kcal);
-  localStorage.setItem('localCustomFoodDb_' + currentLang, JSON.stringify(currentDb));
-  initCategories(); 
-}
+function getCustomDbFromStorage() { const data = localStorage.getItem('localCustomFoodDb_' + currentLang); return data ? JSON.parse(data) : {}; }
+function saveCustomDbToStorage(name, kcal) { let currentDb = getCustomDbFromStorage(); currentDb[name] = Math.round(kcal); localStorage.setItem('localCustomFoodDb_' + currentLang, JSON.stringify(currentDb)); initCategories(); }
 
 function initCategories() {
-  const catSel = document.getElementById('cat'); 
-  const currentSelectedValue = catSel.value;
-  catSel.innerHTML = '';
+  const catSel = document.getElementById('cat'); const currentSelectedValue = catSel.value; catSel.innerHTML = '';
   const targetedDb = foodDbMaster[currentLang];
-  Object.keys(targetedDb).forEach(c => { 
-    let opt = document.createElement('option'); opt.value = c; opt.innerText = c; catSel.appendChild(opt); 
-  });
+  Object.keys(targetedDb).forEach(c => { let opt = document.createElement('option'); opt.value = c; opt.innerText = c; catSel.appendChild(opt); });
   const customDb = getCustomDbFromStorage();
-  if (Object.keys(customDb).length > 0) {
-    let opt = document.createElement('option'); opt.value = "직접 입력한 음식"; opt.innerText = i18n[currentLang].customCategoryTag;
-    catSel.appendChild(opt);
-  }
-  if (currentSelectedValue && [...catSel.options].some(o => o.value === currentSelectedValue)) {
-    catSel.value = currentSelectedValue;
-  }
+  if (Object.keys(customDb).length > 0) { let opt = document.createElement('option'); opt.value = "직접 입력한 음식"; opt.innerText = i18n[currentLang].customCategoryTag; catSel.appendChild(opt); }
+  if (currentSelectedValue && [...catSel.options].some(o => o.value === currentSelectedValue)) { catSel.value = currentSelectedValue; }
   onCatSelect();
 }
 
 function onCatSelect() {
-  const cat = document.getElementById('cat').value, fSel = document.getElementById('food');
-  fSel.innerHTML = '';
+  const cat = document.getElementById('cat').value, fSel = document.getElementById('food'); fSel.innerHTML = '';
   if (cat === "직접 입력한 음식") {
     const customDb = getCustomDbFromStorage();
-    Object.keys(customDb).forEach(n => {
-      let opt = document.createElement('option'); opt.value = n; opt.innerText = `${n} (${customDb[n]}kcal)`; fSel.appendChild(opt);
-    });
+    Object.keys(customDb).forEach(n => { let opt = document.createElement('option'); opt.value = n; opt.innerText = `${n} (${customDb[n]}kcal)`; fSel.appendChild(opt); });
   } else if (foodDbMaster[currentLang][cat]) {
     const section = foodDbMaster[currentLang][cat];
-    Object.keys(section).forEach(n => { 
-      let opt = document.createElement('option'); opt.value = n; opt.innerText = `${n} (${section[n]}kcal)`; fSel.appendChild(opt); 
-    });
+    Object.keys(section).forEach(n => { let opt = document.createElement('option'); opt.value = n; opt.innerText = `${n} (${section[n]}kcal)`; fSel.appendChild(opt); });
   }
 }
 
@@ -674,7 +834,12 @@ function renderCalendarGrid() {
   } else document.getElementById('calTitleYearMonth').innerText = `${calCurrentYear}${pack.calYearSuffix}${displayMonth}${pack.calMonthSuffix}`;
   
   const weekGrid = document.getElementById('calWeekGrid'); weekGrid.innerHTML = "";
-  pack.calWeeks.forEach(w => { weekGrid.innerHTML += `<div>${w}</div>`; });
+  // 달력 요일 렌더링 (주말 적색 표기)
+  pack.calWeeks.forEach((w, idx) => { 
+    let colorStyle = (idx === 0 || idx === 6) ? 'color: #ff5252;' : '';
+    weekGrid.innerHTML += `<div style="${colorStyle}">${w}</div>`; 
+  });
+  
   const daysGrid = document.getElementById('calDaysGrid'); daysGrid.innerHTML = "";
   
   const firstDayIndex = new Date(calCurrentYear, calCurrentMonth, 1).getDay();
@@ -687,7 +852,12 @@ function renderCalendarGrid() {
     let classes = "cal-day-cell";
     if(today.getFullYear() === calCurrentYear && today.getMonth() === calCurrentMonth && today.getDate() === d) classes += " today-active";
     if(calSelectedDate && calSelectedDate.getFullYear() === calCurrentYear && calSelectedDate.getMonth() === calCurrentMonth && calSelectedDate.getDate() === d) classes += " selected-active";
-    daysGrid.innerHTML += `<div class="${classes}" onclick="selectCalendarDate(${d})">${d}</div>`;
+    
+    // 주말(일=0, 토=6) 날짜 적색 표기
+    let currentDayOfWeek = new Date(calCurrentYear, calCurrentMonth, d).getDay();
+    let colorStyle = (currentDayOfWeek === 0 || currentDayOfWeek === 6) ? 'color: #ff5252;' : '';
+
+    daysGrid.innerHTML += `<div class="${classes}" style="${colorStyle}" onclick="selectCalendarDate(${d})">${d}</div>`;
   }
   const totalCells = firstDayIndex + lastDate;
   const nextPadding = (7 - (totalCells % 7)) % 7;
@@ -874,12 +1044,7 @@ function moveKite() {
   
   const containerW = area.clientWidth;
   const containerH = area.clientHeight;
-  
-  // 방패연이 화면 밖으로 튀어나가지 않게 안전 여백(Padding)을 넉넉히 줌
-  const kiteW = 40;
-  const kiteH = 90; 
-  const padding = 20; 
-  
+  const kiteW = 40; const kiteH = 90; const padding = 20; 
   const maxLeft = Math.max(0, containerW - kiteW - padding);
   const maxTop = Math.max(0, containerH - kiteH - padding);
   
@@ -898,9 +1063,21 @@ window.addEventListener('scroll', () => {
   if (window.scrollY > 250) btn.classList.add('visible');
   else btn.classList.remove('visible');
 });
+function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+let toastTimer;
+function showToast(type) {
+  const msgBox = document.getElementById('toastMsg');
+  const pack = i18n[currentLang];
+  if(type === 'tdee') msgBox.innerText = pack.toastTdee;
+  else if(type === 'tdee_btn') msgBox.innerText = pack.toastTdeeBtn;
+  else if(type === 'intake') msgBox.innerText = pack.toastIntake;
+  else if(type === 'goal') msgBox.innerText = pack.toastGoal;
+  else if(type === 'map_btn') msgBox.innerText = pack.toastMapBtn;
+  
+  msgBox.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { msgBox.classList.remove('show'); }, 3000);
 }
 </script>
 </body>
